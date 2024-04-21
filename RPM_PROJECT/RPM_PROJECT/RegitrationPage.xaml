@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RPM_PROJECT.RegitrationPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#000000" >
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10, 130, 10, 10" Spacing="30">
+                <Button BackgroundColor="#000000" TextColor="#5F7C8D" 
+            Text="Вход"/>
+                <StackLayout BackgroundColor="#1392DC" HeightRequest="50">
+                    <Button BackgroundColor="#000000" TextColor="#5F7C8D" 
+                    Text="Регистрация" />
+                </StackLayout>
+            </StackLayout>
+            <Entry TextColor="#5F7C8D" Placeholder="Введите email" Margin="20" PlaceholderColor="#5F7C8D"
+           x:Name="email"/>
+            <Entry TextColor="#5F7C8D" Placeholder="Введите пароль" Margin="20" PlaceholderColor="#5F7C8D" 
+           x:Name="Password" IsPassword="True"/>
+            <Entry TextColor="#5F7C8D" Placeholder="Введите пароль повторно" Margin="20" PlaceholderColor="#5F7C8D" 
+            x:Name="Password2" IsPassword="True"/>
+            <Button BackgroundColor="#4B687A" Text="Зарегестрироваться" TextColor="White" Margin="20"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
