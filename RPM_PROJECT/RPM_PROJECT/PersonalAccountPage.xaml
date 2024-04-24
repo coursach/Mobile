@@ -2,11 +2,35 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RPM_PROJECT.PersonalAccountPage">
-    <ContentPage.Content>
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="#000000"/>
+            <Setter Property="TextColor" Value="#555555"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView Background="#000000">
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button ImageSource="cross.png" BackgroundColor="#000000" HorizontalOptions="EndAndExpand" />
+            <Label Text="Данные аккаунта" TextColor="White" FontSize="16"/>
+            <Button ImageSource="ava.png" BackgroundColor="#000000"/>
+
+            <Label Text="Основная почта"/>
+            <Entry />
+            <Label  Text="Пароль"/>
+            <Entry/>
+            <Label  Text="Имя"/>
+            <Entry/>
+            <Label  Text="Фамилия"/>
+            <Entry/>
+            <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White"/>
+            
+            <Label Text="Активная подписка" TextColor="White" FontSize="16"/>
+            <Label x:Name="info" Text="столько то такая то"/>
+            <Button Text="ОТКАЗАТСЬЯ ОТ ПОДПИСКИ" Clicked="Button_Clicked" BackgroundColor="#000000" TextColor="White"/>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

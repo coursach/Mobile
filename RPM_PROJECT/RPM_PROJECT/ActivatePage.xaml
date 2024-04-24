@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RPM_PROJECT.ActivatePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <StackLayout BackgroundColor="#000000">
+        <Button ImageSource="cross.png" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand"/>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Label TextColor="White" FontSize="16">Получите подписку на фильмы,сериалы и аниме</Label>
+            <Entry BackgroundColor="#D9D9D9" TextColor="White"/>
         </StackLayout>
-    </ContentPage.Content>
+    </StackLayout>
 </ContentPage>

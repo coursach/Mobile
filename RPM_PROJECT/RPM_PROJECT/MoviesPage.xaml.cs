@@ -16,5 +16,21 @@ namespace RPM_PROJECT
 		{
 			InitializeComponent ();
 		}
+		public MoviesPage(int type)
+		{
+			InitializeComponent ();
+			if (type == 0) // movie
+			{
+
+			}
+			if (type == 1) // serial
+			{
+
+			}
+			if (type == 2) // anime
+			{
+
+			}
+		}
 	}
 }
