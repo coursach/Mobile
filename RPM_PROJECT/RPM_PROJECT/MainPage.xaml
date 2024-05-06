@@ -4,11 +4,11 @@
              x:Class="RPM_PROJECT.MainPage">
     <ContentPage.ToolbarItems >
         <ToolbarItem x:Name="profile" IconImageSource="" Text="Войти" Clicked="Profile"/>
-        <ToolbarItem Text="Страница Фильмов" Clicked="Movies"/>
-        <ToolbarItem Text="Страница Сериалов" Clicked="Serials"/>
-        <ToolbarItem Text="Страница Аниме" Clicked="Anime"/>
-        <ToolbarItem Text="Моё" Clicked="My"/>
-        <ToolbarItem Text="Подписка" Clicked="Sub"/>
+        <ToolbarItem Text="Страница Фильмов" Order="Secondary" Clicked="Movies"/>
+        <ToolbarItem Text="Страница Сериалов" Order="Secondary" Clicked="Serials"/>
+        <ToolbarItem Text="Страница Аниме" Order="Secondary" Clicked="Anime"/>
+        <ToolbarItem Text="Моё" Order="Secondary" Clicked="My"/>
+        <ToolbarItem Text="Подписка" Order="Secondary" Clicked="Sub"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <Style TargetType="Button">
@@ -21,17 +21,6 @@
         </Style>
     </ContentPage.Resources>
     <StackLayout BackgroundColor="Black">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="70" />
-            </Grid.ColumnDefinitions>
-            <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0"/>
-            <SearchBar PlaceholderColor="AliceBlue" Grid.Column="1"/>
-            <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource=""/>
-        </Grid>
         <ScrollView>
             <StackLayout>
                 <StackLayout Padding="10">

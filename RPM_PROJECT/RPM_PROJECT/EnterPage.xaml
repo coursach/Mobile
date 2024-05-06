@@ -9,13 +9,13 @@
                     <Button BackgroundColor="#000000" TextColor="#5F7C8D" 
                     Text="Вход" />
                 </StackLayout>
-                <Button BackgroundColor="#000000" TextColor="#5F7C8D" Text="Регистрация"/>
+                <Button BackgroundColor="#000000" TextColor="#5F7C8D" Text="Регистрация" Clicked="Button_Clicked_2"/>
             </StackLayout>
-            <Entry TextColor="#5F7C8D" Placeholder="Введите email" Margin="20" PlaceholderColor="#5F7C8D"
+            <Entry TextColor="#5F7C8D" Placeholder="Введите email" Margin="20" MaxLength="50" PlaceholderColor="#5F7C8D"
            x:Name="email"/>
-            <Entry TextColor="#5F7C8D" Placeholder="Введите пароль" Margin="20" PlaceholderColor="#5F7C8D" 
+            <Entry TextColor="#5F7C8D" Placeholder="Введите пароль" Margin="20" MaxLength="50" PlaceholderColor="#5F7C8D" 
            x:Name="Password" IsPassword="True"/>
-            <Button BackgroundColor="#4B687A" Text="Войти" TextColor="White" Margin="20"/>
+            <Button BackgroundColor="#4B687A" Text="Войти" TextColor="White" Margin="20" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

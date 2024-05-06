@@ -20,7 +20,7 @@ namespace RPM_PROJECT
         
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2)
+            if (1 == 1)
             {
 
                 Navigation.PushAsync(new EnterPage());

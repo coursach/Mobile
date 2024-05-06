@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms.Platform.Android;
 
 namespace RPM_PROJECT.Droid
 {
@@ -12,6 +13,9 @@ namespace RPM_PROJECT.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            ToolbarResource = Resource.Layout.Toolbar;
+            this.SetStatusBarColor(Xamarin.Forms.Color.FromHex("#000000").ToAndroid());
+
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
