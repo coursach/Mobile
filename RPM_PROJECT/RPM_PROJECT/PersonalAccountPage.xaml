@@ -13,10 +13,10 @@
         </Style>
     </ContentPage.Resources>
     <ScrollView Background="#000000">
-        <StackLayout>
-            <Button ImageSource="cross.png" BackgroundColor="#000000" HorizontalOptions="EndAndExpand" />
-            <Label Text="Данные аккаунта" TextColor="White" FontSize="16"/>
-            <Button ImageSource="ava.png" BackgroundColor="#000000"/>
+        <StackLayout Margin="20">
+            <Label Text="Данные аккаунта" TextColor="White" FontSize="25"/>
+            
+            <Button ImageSource="ava.png" HeightRequest="200" WidthRequest="200" BackgroundColor="#000000"/>
 
             <Label Text="Основная почта"/>
             <Entry />
@@ -27,10 +27,6 @@
             <Label  Text="Фамилия"/>
             <Entry/>
             <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White"/>
-            
-            <Label Text="Активная подписка" TextColor="White" FontSize="16"/>
-            <Label x:Name="info" Text="столько то такая то"/>
-            <Button Text="ОТКАЗАТСЬЯ ОТ ПОДПИСКИ" Clicked="Button_Clicked" BackgroundColor="#000000" TextColor="White"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -8,58 +8,49 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-            <Setter Property="FontSize" Value="8"/>
+            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Margin" Value="0, 10, 0, 0"/>
-            <Setter Property="HeightRequest" Value="30"/>
+            <Setter Property="HeightRequest" Value="35"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#1263DE"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="#000000">
             <ScrollView Orientation="Vertical">
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="15">
-                        <StackLayout >
-                            <Image Source="prem12.png" WidthRequest="180"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <StackLayout>
+                            <StackLayout BackgroundColor="#1263DE">
+                                <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
+                                <RelativeLayout>
+                                    <Image Source="rectangularforsub.png" WidthRequest="180"/>
+                                    <Label Text="12" FontSize="70" Margin="47, 5"/>
+                                    <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
+                                </RelativeLayout>                                
+                                <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
+                            </StackLayout>
                             <Label Text="1 000₽ в первый год"/>
                             <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
+                            <Button Text="Оформить подписку" Clicked="Button_Clicked"/>
                         </StackLayout>
                         <StackLayout>
-                            <Image Source="prem12.png" WidthRequest="180"/>
+                            <StackLayout BackgroundColor="#1263DE">
+                                <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
+                                <RelativeLayout>
+                                    <Image Source="rectangularforsub.png" WidthRequest="180"/>
+                                    <Label Text="12" FontSize="70" Margin="47, 5"/>
+                                    <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
+                                </RelativeLayout>
+                                <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
+                            </StackLayout>
                             <Label Text="1 000₽ в первый год"/>
                             <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
+                            <Button Text="Оформить подписку" Clicked="Button_Clicked"/>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="15">
-                        <StackLayout >
-                            <Image Source="prem12.png" WidthRequest="180"/>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
-                        </StackLayout>
-                        <StackLayout>
-                            <Image Source="prem12.png" WidthRequest="180"/>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
-                        </StackLayout>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="15">
-                        <StackLayout >
-                            <Image Source="prem12.png" WidthRequest="180"/>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
-                        </StackLayout>
-                        <StackLayout>
-                            <Image Source="prem12.png" WidthRequest="180"/>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" TextColor="White" BackgroundColor="#1263DE"/>
-                        </StackLayout>
-                    </StackLayout>
+                                       
                 </StackLayout>
 
             </ScrollView>

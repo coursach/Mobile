@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RPM_PROJECT.SettingsPage">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#000000"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Background="#000000">
+            <StackLayout Margin="50, 130">
+                <Label FontSize="35">Настройки</Label>
+
+                <Label>Подписка</Label>
+                <Button Text="Управление подпиской" Clicked="Button_Clicked" />
+                <Button Text="Активация промокода" Clicked="Button_Clicked_2"/>
+
+                <Label>Данные</Label>
+                <Button Text="Изменить данные аккаунта" Clicked="Button_Clicked_1"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

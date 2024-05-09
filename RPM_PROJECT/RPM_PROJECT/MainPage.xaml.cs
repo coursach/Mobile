@@ -50,5 +50,9 @@ namespace RPM_PROJECT
         {
             Navigation.PushAsync(new SubsPage());
         }
+        private void Settings(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SettingsPage());
+        }
     }
 }

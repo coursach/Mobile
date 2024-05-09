@@ -9,6 +9,7 @@
         <ToolbarItem Text="Страница Аниме" Order="Secondary" Clicked="Anime"/>
         <ToolbarItem Text="Моё" Order="Secondary" Clicked="My"/>
         <ToolbarItem Text="Подписка" Order="Secondary" Clicked="Sub"/>
+        <ToolbarItem Text="Настройки" Order="Secondary" Clicked="Settings"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <Style TargetType="Button">
