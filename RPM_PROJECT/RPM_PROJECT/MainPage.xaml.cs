@@ -10,37 +10,73 @@ namespace RPM_PROJECT
 {
     public partial class MainPage : ContentPage
     {
-        
         public MainPage()
         {
             InitializeComponent();
-
-            ToolbarItem tb = new ToolbarItem();
         }
-        
-        private void Profile(object sender, EventArgs e)
+       private async void ClosePanel(object sender, EventArgs e)
+        {
+            if (BurgerSlider.IsVisible)
+            {
+                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
+                await Task.Delay(200);
+                BurgerSlider.IsVisible = false;
+            }
+            if (ProfileSlider.IsVisible)
+            {
+                ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
+                await Task.Delay(200);
+                ProfileSlider.IsVisible = false;
+            }
+        }
+        private async void OpenBurger(object sender, EventArgs e)
+        {
+            if (BurgerSlider.IsVisible)
+            {
+                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
+                await Task.Delay(200);
+                BurgerSlider.IsVisible = false;
+            }
+            else
+            {                
+                BurgerSlider.IsVisible = true;
+                BurgerSlider.TranslateTo(10, 10, 450, Easing.CubicInOut);
+            }
+        }
+
+        private async void Profile(object sender, EventArgs e)
         {
             if (1 == 1)
             {
 
-                Navigation.PushAsync(new EnterPage());
+                Navigation.PushAsync(new RegPage());
             }
             else
             {
-                Navigation.PushAsync(new PersonalAccountPage());
+                if (ProfileSlider.IsVisible)
+                {
+                    ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
+                    await Task.Delay(200);
+                    ProfileSlider.IsVisible = false;
+                }
+                else
+                {
+                    ProfileSlider.IsVisible = true;
+                    ProfileSlider.TranslateTo(-10, 10, 450, Easing.CubicInOut);
+                }
             }
         }
         private void Anime(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage(2));
         }
         private void Movies(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage(0));
         }
         private void Serials(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage(1));
         }
         private void My(object sender, EventArgs e)
         {
@@ -53,6 +89,16 @@ namespace RPM_PROJECT
         private void Settings(object sender, EventArgs e)
         {
             Navigation.PushAsync(new SettingsPage());
+        }
+
+        private void ToMainPage(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void Exit(object sender, EventArgs e)
+        {
+
         }
     }
 }

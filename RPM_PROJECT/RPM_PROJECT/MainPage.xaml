@@ -1,62 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RPM_PROJECT.MainPage">
-    <ContentPage.ToolbarItems >
-        <ToolbarItem x:Name="profile" IconImageSource="" Text="Войти" Clicked="Profile"/>
-        <ToolbarItem Text="Страница Фильмов" Order="Secondary" Clicked="Movies"/>
-        <ToolbarItem Text="Страница Сериалов" Order="Secondary" Clicked="Serials"/>
-        <ToolbarItem Text="Страница Аниме" Order="Secondary" Clicked="Anime"/>
-        <ToolbarItem Text="Моё" Order="Secondary" Clicked="My"/>
-        <ToolbarItem Text="Подписка" Order="Secondary" Clicked="Sub"/>
-        <ToolbarItem Text="Настройки" Order="Secondary" Clicked="Settings"/>
-    </ContentPage.ToolbarItems>
+             x:Class="RPM_PROJECT.MainPage"
+             NavigationPage.HasNavigationBar="False"
+             >
+    
     <ContentPage.Resources>
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="Black"/>
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="FontSize" Value="8"/>
         </Style>
+        
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="#7F7F7F"/>
         </Style>
+        
+        <Style TargetType="Image" x:Key="aga">
+            <Setter Property="HeightRequest" Value="150"/>
+        </Style>
+        
+        <Style TargetType="Button" x:Key="burg">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BackgroundColor" Value="#555555"/>
+            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+        </Style>
     </ContentPage.Resources>
-    <StackLayout BackgroundColor="Black">
+
+    <Grid BackgroundColor="Black">
+
         <ScrollView>
+
             <StackLayout>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClosePanel"/>
+                </StackLayout.GestureRecognizers>
+
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="70" />
+                        </Grid.ColumnDefinitions>
+                        <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
+                        <SearchBar PlaceholderColor="White" Grid.Column="1" BackgroundColor="AliceBlue"/>
+                        <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+                    </Grid>
+                </StackLayout>
+
                 <StackLayout Padding="10">
                     <Image Source="banner.png"/>
                 </StackLayout>
+                
                 <StackLayout Padding="10">
                     <Label TextColor="White" FontSize="20">Фильмы</Label>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal">
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
                         </StackLayout>
                     </ScrollView>
                 </StackLayout>
+                
                 <StackLayout Padding="10">
                     <Label TextColor="White" FontSize="20">Фильмы</Label>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal">
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
                         </StackLayout>
                     </ScrollView>
                 </StackLayout>
+                
                 <StackLayout Padding="10">
                     <Label TextColor="White" FontSize="20">Фильмы</Label>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal">
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
-                            <Image Source="i_drive.png" HeightRequest="100"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
                         </StackLayout>
                     </ScrollView>
                 </StackLayout>
@@ -71,6 +102,47 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-    </StackLayout>
+
+
+        <Grid x:Name="BurgerSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180" >
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OpenBurger"/>
+            </Grid.GestureRecognizers>
+            <StackLayout x:Name="BurgerBody" Spacing="5" >
+                <Button ImageSource="burg.png"  Text="KINOHUB" Margin="0, 0, 0, 10" Clicked="OpenBurger" Style="{StaticResource burg}"/>
+                <Button Text="Аниме" Clicked="Anime" Style="{StaticResource burg}"/>
+                <Button Text="Фильм" Clicked="Movies" Style="{StaticResource burg}"/>
+                <Button Text="Сериал" Clicked="Serials" Style="{StaticResource burg}"/>
+                <Button Text="Главная" Clicked="ToMainPage" Style="{StaticResource burg}"/>
+                <Button Text="Моё" Clicked="My" Style="{StaticResource burg}"/>
+                <Button Text="Подписки" Clicked="Sub" Style="{StaticResource burg}"/>
+            </StackLayout>
+        </Grid>
+
+
+        <Grid x:Name="ProfileSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180" >
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Profile"/>
+            </Grid.GestureRecognizers>
+            <StackLayout x:Name="ProfileBody" Spacing="5" >
+                
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="10">
+                    
+                    <StackLayout>
+                        <Label Text="Яковлева Мерся" TextColor="White" FontSize="16"/>
+                        <Label Text="cheito@mail.ru"/>
+                    </StackLayout>
+
+                    <Image Source="ava.png"/>
+
+                </StackLayout>
+
+                <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}"/>
+                <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}"/>
+
+            </StackLayout>
+        </Grid>
+
+    </Grid>
 
 </ContentPage>

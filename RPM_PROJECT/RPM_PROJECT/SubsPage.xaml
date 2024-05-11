@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RPM_PROJECT.SubsPage">
+             x:Class="RPM_PROJECT.SubsPage"
+             NavigationPage.HasNavigationBar="False"
+             >
     <ContentPage.Resources>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="White"/>
-        </Style>
-        <Style TargetType="Button">
+
+        <Style TargetType="Button" x:Key="Sub">
             <Setter Property="CornerRadius" Value="20"/>
             <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
             <Setter Property="FontSize" Value="12"/>
@@ -15,45 +15,133 @@
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="BackgroundColor" Value="#1263DE"/>
         </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#7F7F7F"/>
+        </Style>
+
+        <Style TargetType="Image" x:Key="aga">
+            <Setter Property="HeightRequest" Value="150"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="burg">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BackgroundColor" Value="#555555"/>
+            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+        </Style>
     </ContentPage.Resources>
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="#000000">
-            <ScrollView Orientation="Vertical">
+
+    <Grid BackgroundColor="Black">
+        
+        <ScrollView Orientation="Vertical">
+            <StackLayout>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClosePanel"/>
+                </StackLayout.GestureRecognizers>
+
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                        <StackLayout>
-                            <StackLayout BackgroundColor="#1263DE">
-                                <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
-                                <RelativeLayout>
-                                    <Image Source="rectangularforsub.png" WidthRequest="180"/>
-                                    <Label Text="12" FontSize="70" Margin="47, 5"/>
-                                    <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
-                                </RelativeLayout>                                
-                                <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
-                            </StackLayout>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" Clicked="Button_Clicked"/>
-                        </StackLayout>
-                        <StackLayout>
-                            <StackLayout BackgroundColor="#1263DE">
-                                <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
-                                <RelativeLayout>
-                                    <Image Source="rectangularforsub.png" WidthRequest="180"/>
-                                    <Label Text="12" FontSize="70" Margin="47, 5"/>
-                                    <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
-                                </RelativeLayout>
-                                <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
-                            </StackLayout>
-                            <Label Text="1 000₽ в первый год"/>
-                            <Label Text="далее 2 349 в год"/>
-                            <Button Text="Оформить подписку" Clicked="Button_Clicked"/>
-                        </StackLayout>
-                    </StackLayout>
-                                       
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="70" />
+                        </Grid.ColumnDefinitions>
+                        <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
+                        <SearchBar PlaceholderColor="AliceBlue" Grid.Column="1"/>
+                        <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+                    </Grid>
                 </StackLayout>
 
-            </ScrollView>
-        </StackLayout>
-        </ContentPage.Content>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <StackLayout.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="TextColor" Value="White"/>
+                            <Setter Property="FontSize" Value="14"/>
+                        </Style>
+                    </StackLayout.Resources>
+                    <StackLayout>                        
+                        <StackLayout BackgroundColor="#1263DE">
+                            <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
+                            <RelativeLayout>
+                                <Image Source="rectangularforsub.png" WidthRequest="180"/>
+                                <Label Text="12" FontSize="70" Margin="47, 5"/>
+                                <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
+                            </RelativeLayout>
+                            <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
+                        </StackLayout>
+                        <Label Text="1 000₽ в первый год"/>
+                        <Label Text="далее 2 349 в год"/>
+                        <Button Text="Оформить подписку" Style="{StaticResource Sub}"/>
+                    </StackLayout>
+                    
+                    <StackLayout>
+                        <StackLayout BackgroundColor="#1263DE">
+                            <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
+                            <RelativeLayout>
+                                <Image Source="rectangularforsub.png" WidthRequest="180"/>
+                                <Label Text="12" FontSize="70" Margin="47, 5"/>
+                                <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
+                            </RelativeLayout>
+                            <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
+                        </StackLayout>
+                        <Label Text="1 000₽ в первый год"/>
+                        <Label Text="далее 2 349 в год"/>
+                        <Button Text="Оформить подписку"  Style="{StaticResource Sub}"/>
+                    </StackLayout>
+                </StackLayout>
+
+            </StackLayout>
+
+        </ScrollView>
+
+        <Grid x:Name="BurgerSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OpenBurger"/>
+            </Grid.GestureRecognizers>
+            <StackLayout x:Name="BurgerBody" Spacing="5" >
+                <Button ImageSource="burg.png"  Text="KINOHUB" Margin="0, 0, 0, 10" Clicked="OpenBurger" Style="{StaticResource burg}"/>
+                <Button Text="Аниме" Clicked="Anime" Style="{StaticResource burg}"/>
+                <Button Text="Фильм" Clicked="Movies" Style="{StaticResource burg}"/>
+                <Button Text="Сериал" Clicked="Serials" Style="{StaticResource burg}"/>
+                <Button Text="Главная" Clicked="ToMainPage" Style="{StaticResource burg}"/>
+                <Button Text="Моё" Clicked="My" Style="{StaticResource burg}"/>
+                <Button Text="Подписки" Clicked="Sub" Style="{StaticResource burg}"/>
+            </StackLayout>
+        </Grid>
+
+
+        <Grid x:Name="ProfileSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180" >
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Profile"/>
+            </Grid.GestureRecognizers>
+            <StackLayout x:Name="ProfileBody" Spacing="5" >
+
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="10">
+
+                    <StackLayout>
+                        <Label Text="Яковлева Мерся" TextColor="White" FontSize="16"/>
+                        <Label Text="cheito@mail.ru"/>
+                    </StackLayout>
+
+                    <Image Source="ava.png"/>
+
+                </StackLayout>
+
+                <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}"/>
+                <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}"/>
+
+            </StackLayout>
+        </Grid>
+
+    </Grid>
+    
 </ContentPage>

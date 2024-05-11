@@ -2,10 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RPM_PROJECT.SubControlPage">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
     <StackLayout BackgroundColor="#000000">
-        <Label Text="Управление подпиской" FontSize="20" TextColor="White" Margin="10"/>
-        <Label Text="Активная подписка" FontSize="14" TextColor="White" HorizontalOptions="Center"/>
-        <Label Text="11.11.2077 PREMIUM 12 месяцев до 11.11.2078" FontSize="14" TextColor="White"/>
-        <Button TextColor="White" BackgroundColor="#000000" Text="ОТКАЗАТЬСЯ ОТ ПОДПИСКИ"/>
+        <StackLayout Margin="50, 180">
+            <Label Text="Управление подпиской" FontSize="20" Margin="10"/>
+            <Label Text="Активная подписка"  HorizontalOptions="Center"/>
+            <Label Text="11.11.2077 PREMIUM 12 месяцев до 11.11.2078" />
+            <Button TextColor="White" BackgroundColor="#000000" Text="ОТКАЗАТЬСЯ ОТ ПОДПИСКИ"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

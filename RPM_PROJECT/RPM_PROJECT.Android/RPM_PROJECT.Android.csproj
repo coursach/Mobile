@@ -118,5 +118,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\rectangularforsub.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\anime.png" />
+    <Content Include="Resources\drawable\cover.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

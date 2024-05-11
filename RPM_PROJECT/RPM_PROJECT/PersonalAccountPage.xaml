@@ -13,20 +13,25 @@
         </Style>
     </ContentPage.Resources>
     <ScrollView Background="#000000">
-        <StackLayout Margin="20">
+        <StackLayout Margin="20" Spacing="10">
             <Label Text="Данные аккаунта" TextColor="White" FontSize="25"/>
             
-            <Button ImageSource="ava.png" HeightRequest="200" WidthRequest="200" BackgroundColor="#000000"/>
+            <Image Source="ava.png" HeightRequest="250" WidthRequest="250" BackgroundColor="#000000"/>
 
             <Label Text="Основная почта"/>
-            <Entry />
+            <Entry Placeholder="Ваш email" />
+            
             <Label  Text="Пароль"/>
-            <Entry/>
+            <Entry Placeholder="Пароль"/>
+            
             <Label  Text="Имя"/>
-            <Entry/>
+            <Entry Placeholder="Имя"/>
+            
             <Label  Text="Фамилия"/>
-            <Entry/>
+            <Entry Placeholder="Фамилия"/>
+            
             <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White"/>
+            
         </StackLayout>
     </ScrollView>
 </ContentPage>
