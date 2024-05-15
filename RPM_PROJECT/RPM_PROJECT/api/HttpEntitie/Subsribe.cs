@@ -12,7 +12,7 @@ namespace RPM_PROJECT.api.HttpEntitie
         public string Name { set; get; }
 
         [JsonPropertyName("count_month")]
-        public int CounMonth { set; get; }
+        public int CountMonth { set; get; }
 
         [JsonPropertyName("title")]
         public string Title { set; get; }
