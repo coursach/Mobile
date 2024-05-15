@@ -1,23 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RPM_PROJECT.WatchPage">
+             x:Class="RPM_PROJECT.WatchPage"
+                                       NavigationPage.HasNavigationBar="False"
+             >
+
     <ContentPage.Resources>
-        <Style TargetType="Label">
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Black"/>
             <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#7F7F7F"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="burg">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
         </Style>
     </ContentPage.Resources>
-    <ScrollView BackgroundColor="#000000">
-        <StackLayout Padding="10">
-            
-            <Label Text="О моём перерождении в слизь" FontSize="45"/>
-            <Image Source="anime.png"/>
-            <Label Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
+
+    <Grid BackgroundColor="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.7*"/>
+                <ColumnDefinition Width="*" x:Name="ColumnSize"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <Button ImageSource="burg.png" FontSize="Large" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
+            <Button x:Name="ava" FontSize="Header" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+        </Grid>
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
 
             <StackLayout>
-                
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClosePanel"/>
+                </StackLayout.GestureRecognizers>
+
+
+                <StackLayout Padding="25">
+
+                    <Label Text="О моём перерождении в слизь" FontSize="45"/>
+                    <Image Source="anime.png"/>
+                    <Label Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
+
+                    <StackLayout>
+
+                        <WebView Source="https://www.youtube.com/embed/BvyafSjv3xY?si=8pNGlTaAL0mWHJXJ" x:Name="WebView" >
+                        </WebView>
+                        
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="EndAndExpand">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                        <Image Source="vk.png"/>
+                        <Image Source="tg.png"/>
+                        <Image Source="chviter.png"/>
+                    </StackLayout>
+                    <Label HorizontalOptions="Center">Мы всегда готовы вам помочь</Label>
+                </StackLayout>
             </StackLayout>
-            
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+
+
+        <Grid x:Name="BurgerSlider" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="black" Grid.RowSpan="2" Grid.Column="0" RowSpacing="1">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OpenBurger"/>
+            </Grid.GestureRecognizers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Text=" Аниме" Clicked="Anime" Style="{StaticResource burg}" Grid.Row="1" Grid.Column="1"/>
+            <Button Text=" Фильм" Clicked="Movies" Style="{StaticResource burg}" Grid.Row="2" Grid.Column="1"/>
+            <Button Text=" Сериал" Clicked="Serials" Style="{StaticResource burg}" Grid.Row="3" Grid.Column="1"/>
+            <Button Text=" Главная" Clicked="ToMainPage" Style="{StaticResource burg}" Grid.Row="4" Grid.Column="1"/>
+            <Button Text="Моё" Clicked="My" Style="{StaticResource burg}" Grid.Row="5" Grid.Column="1"/>
+            <Button Text=" Подписки" Clicked="Sub" Style="{StaticResource burg}" Grid.Row="6" Grid.Column="1"/>
+        </Grid>
+
+
+        <Grid x:Name="ProfileSlider" BackgroundColor="Black" HorizontalOptions="End" VerticalOptions="StartAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Profile"/>
+            </Grid.GestureRecognizers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Margin="10">
+                    <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium"/>
+                    <Label Text="cheito@mail.ru" TextColor="Gray" />
+                </StackLayout>
+                <Image Source="ava.png" Grid.Column="1"/>
+            </Grid>
+            <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}" Grid.Row="1" HorizontalOptions="Fill" FontSize="Header"/>
+            <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}" Grid.Row="2" HorizontalOptions="Fill" FontSize="Header"/>
+        </Grid>
+
+    </Grid>
+
 </ContentPage>

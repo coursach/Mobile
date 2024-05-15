@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\anime.png" />
+    <AndroidResource Include="Resources\drawable\banner_hamster.png" />
     <Content Include="Resources\drawable\cover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
