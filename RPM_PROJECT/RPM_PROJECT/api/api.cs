@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Net.Http.Json;
 using RPM_PROJECT.api.HttpEntitie;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 
 
 namespace RPM_PROJECT.api
@@ -257,6 +259,26 @@ namespace RPM_PROJECT.api
             }
 
             return response;
+        }
+
+        public static async ValueTask<bool> UpdateImgeUser(string path)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("token", Token);
+            var file = new ByteArrayContent(File.ReadAllBytes(path));
+
+            using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", file))
+            {
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), "Ошибка при отмене подписки",
+                       _displayOk);
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
