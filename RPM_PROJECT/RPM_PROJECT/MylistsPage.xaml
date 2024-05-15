@@ -20,15 +20,32 @@
 
         <Style TargetType="Button" x:Key="burg">
             <Setter Property="TextColor" Value="White"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="BackgroundColor" Value="#555555"/>
-            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
         </Style>
     </ContentPage.Resources>
 
     <Grid BackgroundColor="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <ScrollView>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.7*"/>
+                <ColumnDefinition Width="*" x:Name="ColumnSize"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <Button ImageSource="burg.png" FontSize="Large" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
+            <Button x:Name="ava" FontSize="Header" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+        </Grid>
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
 
             <StackLayout>
 
@@ -36,26 +53,13 @@
                     <TapGestureRecognizer Tapped="ClosePanel"/>
                 </StackLayout.GestureRecognizers>
 
-                <StackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="170"/>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="70" />
-                        </Grid.ColumnDefinitions>
-                        <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
-                        <SearchBar PlaceholderColor="White" Grid.Column="1" BackgroundColor="AliceBlue"/>
-                        <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
-                    </Grid>
-                </StackLayout>
 
                 <StackLayout Padding="10">
                     <Image Source="banner.png"/>
                 </StackLayout>
 
                 <StackLayout Padding="10">
-                    <Label TextColor="White" FontSize="20">Буду смотреть</Label>
+                    <Label TextColor="White" FontSize="20">Фильмы</Label>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal">
                             <Image Source="i_drive.png" Style="{StaticResource aga}"/>
@@ -67,7 +71,19 @@
                 </StackLayout>
 
                 <StackLayout Padding="10">
-                    <Label TextColor="White" FontSize="20">История просмотров</Label>
+                    <Label TextColor="White" FontSize="20">Фильмы</Label>
+                    <ScrollView Orientation="Horizontal">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                            <Image Source="i_drive.png" Style="{StaticResource aga}"/>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+
+                <StackLayout Padding="10">
+                    <Label TextColor="White" FontSize="20">Фильмы</Label>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal">
                             <Image Source="i_drive.png" Style="{StaticResource aga}"/>
@@ -90,43 +106,56 @@
         </ScrollView>
 
 
-        <Grid x:Name="BurgerSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180" >
+        <Grid x:Name="BurgerSlider" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="black" Grid.RowSpan="2" Grid.Column="0" RowSpacing="1">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OpenBurger"/>
             </Grid.GestureRecognizers>
-            <StackLayout x:Name="BurgerBody" Spacing="5" >
-                <Button ImageSource="burg.png"  Text="KINOHUB" Margin="0, 0, 0, 10" Clicked="OpenBurger" Style="{StaticResource burg}"/>
-                <Button Text="Аниме" Clicked="Anime" Style="{StaticResource burg}"/>
-                <Button Text="Фильм" Clicked="Movies" Style="{StaticResource burg}"/>
-                <Button Text="Сериал" Clicked="Serials" Style="{StaticResource burg}"/>
-                <Button Text="Главная" Clicked="ToMainPage" Style="{StaticResource burg}"/>
-                <Button Text="Моё" Clicked="My" Style="{StaticResource burg}"/>
-                <Button Text="Подписки" Clicked="Sub" Style="{StaticResource burg}"/>
-            </StackLayout>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Text=" Аниме" Clicked="Anime" Style="{StaticResource burg}" Grid.Row="1" Grid.Column="1"/>
+            <Button Text=" Фильм" Clicked="Movies" Style="{StaticResource burg}" Grid.Row="2" Grid.Column="1"/>
+            <Button Text=" Сериал" Clicked="Serials" Style="{StaticResource burg}" Grid.Row="3" Grid.Column="1"/>
+            <Button Text=" Главная" Clicked="ToMainPage" Style="{StaticResource burg}" Grid.Row="4" Grid.Column="1"/>
+            <Button Text="Моё" Clicked="My" Style="{StaticResource burg}" Grid.Row="5" Grid.Column="1"/>
+            <Button Text=" Подписки" Clicked="Sub" Style="{StaticResource burg}" Grid.Row="6" Grid.Column="1"/>
         </Grid>
 
 
-        <Grid x:Name="ProfileSlider" IsVisible="False" BackgroundColor="#555555" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" WidthRequest="180" >
+        <Grid x:Name="ProfileSlider" BackgroundColor="Black" HorizontalOptions="End" VerticalOptions="StartAndExpand" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Tapped="Profile"/>
             </Grid.GestureRecognizers>
-            <StackLayout x:Name="ProfileBody" Spacing="5" >
-
-                <StackLayout Orientation="Horizontal" Spacing="10" Margin="10">
-
-                    <StackLayout>
-                        <Label Text="Яковлева Мерся" TextColor="White" FontSize="16"/>
-                        <Label Text="cheito@mail.ru"/>
-                    </StackLayout>
-
-                    <Image Source="ava.png"/>
-
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Margin="10">
+                    <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium"/>
+                    <Label Text="cheito@mail.ru" TextColor="Gray" />
                 </StackLayout>
-
-                <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}"/>
-                <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}"/>
-
-            </StackLayout>
+                <Image Source="ava.png" Grid.Column="1"/>
+            </Grid>
+            <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}" Grid.Row="1" HorizontalOptions="Fill" FontSize="Header"/>
+            <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}" Grid.Row="2" HorizontalOptions="Fill" FontSize="Header"/>
         </Grid>
 
     </Grid>

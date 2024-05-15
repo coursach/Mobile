@@ -13,57 +13,39 @@ namespace RPM_PROJECT
         public MainPage()
         {
             InitializeComponent();
+            BurgerSlider.TranslateTo(-300, 0, 0);
+            ProfileSlider.TranslateTo(300, 0, 0);
+          
         }
-       private async void ClosePanel(object sender, EventArgs e)
+        private void ClosePanel(object sender, EventArgs e)
         {
-            if (BurgerSlider.IsVisible)
+            if (BurgerSlider.TranslationX != -300)
             {
-                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                BurgerSlider.IsVisible = false;
+                BurgerSlider.TranslateTo(-300, 0, 450, Easing.SinOut);
+                
             }
-            if (ProfileSlider.IsVisible)
+            if (ProfileSlider.TranslationX != 300)
             {
-                ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                ProfileSlider.IsVisible = false;
+               ProfileSlider.TranslateTo(300, 0, 450, Easing.SinOut);
             }
         }
-        private async void OpenBurger(object sender, EventArgs e)
+        private void OpenBurger(object sender, EventArgs e)
         {
-            if (BurgerSlider.IsVisible)
+            if(BurgerSlider.TranslationX == - 300)
             {
-                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                BurgerSlider.IsVisible = false;
-            }
-            else
-            {                
-                BurgerSlider.IsVisible = true;
-                BurgerSlider.TranslateTo(10, 10, 450, Easing.CubicInOut);
+                BurgerSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
             }
         }
 
-        private async void Profile(object sender, EventArgs e)
+        private void Profile(object sender, EventArgs e)
         {
-            if (1 == 1)
+            if (1 == 2)
             {
-
                 Navigation.PushAsync(new RegPage());
             }
             else
             {
-                if (ProfileSlider.IsVisible)
-                {
-                    ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
-                    await Task.Delay(200);
-                    ProfileSlider.IsVisible = false;
-                }
-                else
-                {
-                    ProfileSlider.IsVisible = true;
-                    ProfileSlider.TranslateTo(-10, 10, 450, Easing.CubicInOut);
-                }
+                ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
             }
         }
         private void Anime(object sender, EventArgs e)
