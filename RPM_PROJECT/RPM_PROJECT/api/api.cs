@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Net.Http.Json;
 using RPM_PROJECT.api.HttpEntitie;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 
 
@@ -39,8 +38,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), await response.Content.ReadAsStringAsync(),
-                        _displayOk);
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return false;
                 }
 
@@ -63,8 +61,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), await response.Content.ReadAsStringAsync(),
-                       _displayOk);
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return null;
                 }
 
@@ -79,15 +76,14 @@ namespace RPM_PROJECT.api
 
             using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/registration/user", data, _options))
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), await response.Content.ReadAsStringAsync(),
-                       _displayOk);
-                    return false;
-                }
+                if (response.IsSuccessStatusCode)
+                    return true;
+
+
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                return false;
             }
 
-            return true;
         }
 
         public static async ValueTask<string> Login(AuthData data)
@@ -98,8 +94,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), await response.Content.ReadAsStringAsync(),
-                       _displayOk);
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return null;
                 }
 
@@ -118,8 +113,7 @@ namespace RPM_PROJECT.api
             {
                 if(!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), await response.Content.ReadAsStringAsync(),
-                       _displayOk);
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return null;
                 }
 
@@ -136,12 +130,11 @@ namespace RPM_PROJECT.api
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
 
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/link/subscribe" + id.ToString(), null))
+            using (var response = await httpClient.PostAsync(_baseApi + "/user/link/subscribe/" + id.ToString(), null))
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), "Такой подписки не существует",
-                       _displayOk);
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return false;
                 }
             }
@@ -156,15 +149,13 @@ namespace RPM_PROJECT.api
 
             using (var response = await httpClient.PostAsync(_baseApi + "/user/unlink/subscribe", null))
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), "Ошибка при отмене подписки",
-                       _displayOk);
-                    return false;
-                }
+                if (response.IsSuccessStatusCode)
+                    return true;
+                
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                return false;
             }
 
-            return true;
         }
 
         public static async ValueTask<Subsribe> CheckUserSubscribe()
@@ -172,14 +163,13 @@ namespace RPM_PROJECT.api
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
 
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/get/subscribe", null))
+            using (var response = await httpClient.GetAsync(_baseApi + "/user/get/subscribe"))
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadFromJsonAsync<Subsribe>();
 
-                return await response.Content.ReadFromJsonAsync<Subsribe>();
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                return null;
             }
         }
 
@@ -190,12 +180,7 @@ namespace RPM_PROJECT.api
 
             using (var response = await httpClient.PostAsync(_baseApi + "/user/get/promocode/" + promocode, null))
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    return false;
-                }
-
-                return true;
+                return response.IsSuccessStatusCode;
             }
         }
 
@@ -203,20 +188,21 @@ namespace RPM_PROJECT.api
         {
             var httpClient = new HttpClient();
 
-            using (var response = await httpClient.GetStreamAsync(_baseApi + "/" + profileLink))
-            {
-                return response;
-            }
+            return await httpClient.GetStreamAsync(_baseApi + "/" + profileLink);
         }
 
-        public static async ValueTask<System.IO.Stream> GetContent(int id)
+        public static async ValueTask<Stream> GetContent(int id)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
 
-            using (var response = await httpClient.GetStreamAsync(_baseApi + "/user/get/content/" + id.ToString()))
+            using (var response = await httpClient.PostAsync(_baseApi + "/user/get/content/" + id.ToString(), null))
             {
-                return response;
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadAsStreamAsync();
+
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                return null;
             }
         }
 
@@ -226,11 +212,6 @@ namespace RPM_PROJECT.api
             httpClient.DefaultRequestHeaders.Add("token", Token);
 
             var response = await httpClient.GetFromJsonAsync<ContentInfo>(_baseApi + "/content/info/" + id.ToString());
-            if (response is null)
-            {
-                await Alert.DisplayAlert("500", "Контента нет", _displayOk);
-                return null;
-            }
 
             return response;
         }   
@@ -240,23 +221,14 @@ namespace RPM_PROJECT.api
             var httpClient = new HttpClient();
             var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/movie");
 
-            if (response is null)
-            {
-                await Alert.DisplayAlert("500", "Контента нет", _displayOk);
-            }
-
             return response;
         } 
+
 
         public static async ValueTask<List<ContentShort>> GetAllAnime()
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/anime");
-
-            if (response is null)
-            {
-                await Alert.DisplayAlert("500", "Контента нет", _displayOk);
-            }
 
             return response;
         }
@@ -271,14 +243,12 @@ namespace RPM_PROJECT.api
             {
 
                 if (response.IsSuccessStatusCode)
-                {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), "Ошибка при отмене подписки",
-                       _displayOk);
-                    return false;
-                }
-            }
+                    return true;
 
-            return true;
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                return false;
+            }
         }
+
     }
 }
