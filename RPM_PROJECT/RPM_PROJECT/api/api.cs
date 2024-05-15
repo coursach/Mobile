@@ -86,7 +86,7 @@ namespace RPM_PROJECT.api
 
         }
 
-        public static async ValueTask<string> Login(AuthData data)
+        public static async ValueTask<bool> Login(AuthData data)
         {
             var httpClient = new HttpClient();
 
@@ -95,13 +95,13 @@ namespace RPM_PROJECT.api
                 if (!response.IsSuccessStatusCode)
                 {
                     await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                    return null;
+                    return false;
                 }
 
-                var token= await response.Content.ReadFromJsonAsync<Token>();
-                Token = token.TokenValue;
+                var result = await response.Content.ReadFromJsonAsync<Token>();
+                Token = result.TokenValue;
 
-                return token.TokenValue;
+                return true ;
             }
         }
 
