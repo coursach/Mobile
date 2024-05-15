@@ -14,6 +14,11 @@ namespace RPM_PROJECT
         {
             InitializeComponent();
         }
+
+        private async void GoToPlayer(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new WatchPage());
+        }
        private async void ClosePanel(object sender, EventArgs e)
         {
             if (BurgerSlider.IsVisible)
