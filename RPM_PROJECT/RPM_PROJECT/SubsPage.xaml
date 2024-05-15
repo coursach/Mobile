@@ -51,17 +51,6 @@
                     <TapGestureRecognizer Tapped="ClosePanel"/>
                 </StackLayout.GestureRecognizers>
 
-
-                
-
-                <StackLayout VerticalOptions="EndAndExpand">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
-                        <Image Source="vk.png"/>
-                        <Image Source="tg.png"/>
-                        <Image Source="chviter.png"/>
-                    </StackLayout>
-                    <Label HorizontalOptions="Center">Мы всегда готовы вам помочь</Label>
-                </StackLayout>
             </StackLayout>
         </ScrollView>
 

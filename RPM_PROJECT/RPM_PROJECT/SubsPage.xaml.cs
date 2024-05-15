@@ -25,14 +25,16 @@ namespace RPM_PROJECT
             StackLayout RealStack = new StackLayout();
             RelativeLayout relativeLayout = new RelativeLayout();
 
-            stackLayout = new StackLayout
+            for(int i=0; i < 6; i++)
             {
-                Margin = new Thickness(50, 10),
-            };
-            RealStack = new StackLayout()
-            {
-                BackgroundColor = Color.FromHex("#1263DE"),
-                Children = {
+                stackLayout = new StackLayout
+                {
+                    Margin = new Thickness(50, 10),
+                };
+                RealStack = new StackLayout()
+                {
+                    BackgroundColor = Color.FromHex("#1263DE"),
+                    Children = {
                         new Label
                     {
                         Margin = new Thickness(10, 40, 10, 70),
@@ -41,46 +43,48 @@ namespace RPM_PROJECT
                         FontSize = 40
                     }
                 }
-            };
+                };
 
-            relativeLayout = new RelativeLayout { HorizontalOptions = LayoutOptions.CenterAndExpand };
+                relativeLayout = new RelativeLayout { HorizontalOptions = LayoutOptions.CenterAndExpand };
 
-            relativeLayout.Children.Add(new Image()
-            {
-                Source = "rectangularforsub.png",
-                Margin = new Thickness(35, 0)
-            }, Constraint.Constant(0));
-            relativeLayout.Children.Add(new Label()
-            {
-                Text = "12",
-                FontSize = 70,
-                Margin = new Thickness(48, 5)
-            }, Constraint.Constant(0));
-            relativeLayout.Children.Add(new Label()
-            {
-                Text = "Месяцев",
-                Margin = new Thickness(49, 95, 0, 50),
-                TextColor = Color.White,
-                FontSize = 60,
-                BackgroundColor = Color.FromHex("#1263DE"),
-                HorizontalTextAlignment = TextAlignment.Center,
-                WidthRequest = 80
-            }, Constraint.Constant(0));
+                relativeLayout.Children.Add(new Image()
+                {
+                    Source = "rectangularforsub.png",
+                    Margin = new Thickness(35, 0)
+                }, Constraint.Constant(0));
+                relativeLayout.Children.Add(new Label()
+                {
+                    Text = "12",
+                    FontSize = 70,
+                    TextColor = Color.White,
+                    Margin = new Thickness(48, 5)
+                }, Constraint.Constant(0));
+                relativeLayout.Children.Add(new Label()
+                {
+                    Text = "Месяцев",
+                    Margin = new Thickness(49, 95, 0, 50),
+                    TextColor = Color.White,
+                    FontSize = 60,
+                    BackgroundColor = Color.FromHex("#1263DE"),
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    WidthRequest = 80
+                }, Constraint.Constant(0));
 
-            RealStack.Children.Add(relativeLayout);
-            RealStack.Children.Add(new Label
-            {
-                Margin = new Thickness(10, 40, 10, 30),
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Text = "Все фильмы и сериалы",
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
-            });
+                RealStack.Children.Add(relativeLayout);
+                RealStack.Children.Add(new Label
+                {
+                    Margin = new Thickness(10, 40, 10, 30),
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    TextColor = Color.White,
+                    Text = "Все фильмы и сериалы",
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+                });
 
-            stackLayout.Children.Add(RealStack);
+                stackLayout.Children.Add(RealStack);
 
-            stackLayout2 = new StackLayout()
-            {
-                Children =
+                stackLayout2 = new StackLayout()
+                {
+                    Children =
                 {
 
                     new Label
@@ -103,11 +107,36 @@ namespace RPM_PROJECT
                             BackgroundColor= Color.FromHex("#1263DE")
                         }
                 }
+                };
+                stackLayout.Children.Add(stackLayout2);
+
+                scroll.Children.Add(stackLayout);
+            }
+            StackLayout stackLayout1 = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                Children =
+    {
+        new StackLayout
+        {
+            Orientation = StackOrientation.Horizontal,
+            HorizontalOptions = LayoutOptions.Center,
+            Spacing = 20,
+            Children =
+            {
+                new Image { Source = "vk.png" },
+                new Image { Source = "tg.png" },
+                new Image { Source = "chviter.png" }
+            }
+        },
+        new Label
+        {
+            HorizontalOptions = LayoutOptions.Center,
+            Text = "Мы всегда готовы вам помочь"
+        }
+    }
             };
-            stackLayout.Children.Add(stackLayout2);
-
-            scroll.Children.Add(stackLayout);
-
+            scroll.Children.Add(stackLayout1);
         }
         private void ClosePanel(object sender, EventArgs e)
         {
