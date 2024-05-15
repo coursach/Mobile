@@ -15,10 +15,7 @@
             <Label Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
 
             <StackLayout>
-                <WebView Source="https://www.youtube.com/embed/BvyafSjv3xY?si=8pNGlTaAL0mWHJXJ" x:Name="WebView" >
-                    
-                    
-                </WebView>
+                <WebView Source="https://www.youtube.com/embed/BvyafSjv3xY?si=8pNGlTaAL0mWHJXJ" x:Name="WebView"/>
             </StackLayout>
             
         </StackLayout>

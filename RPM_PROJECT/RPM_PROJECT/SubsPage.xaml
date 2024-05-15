@@ -23,7 +23,7 @@
         </Style>
 
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="#7F7F7F"/>
+            <Setter Property="TextColor" Value="White"/>
         </Style>
 
         <Style TargetType="Image" x:Key="aga">
@@ -39,66 +39,26 @@
     </ContentPage.Resources>
 
     <Grid BackgroundColor="Black">
-        
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
+                <SearchBar PlaceholderColor="AliceBlue" Grid.Column="1"/>
+                <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+            </Grid>
+        </StackLayout>
         <ScrollView Orientation="Vertical">
-            <StackLayout>
+            <StackLayout x:Name="scroll">
 
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ClosePanel"/>
                 </StackLayout.GestureRecognizers>
-
-                <StackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="170"/>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="70" />
-                        </Grid.ColumnDefinitions>
-                        <Button ImageSource="burg.png" FontSize="10" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
-                        <SearchBar PlaceholderColor="AliceBlue" Grid.Column="1"/>
-                        <Button x:Name="ava" FontSize="13" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
-                    </Grid>
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                    <StackLayout.Resources>
-                        <Style TargetType="Label">
-                            <Setter Property="TextColor" Value="White"/>
-                            <Setter Property="FontSize" Value="14"/>
-                        </Style>
-                    </StackLayout.Resources>
-                    <StackLayout>                        
-                        <StackLayout BackgroundColor="#1263DE">
-                            <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
-                            <RelativeLayout>
-                                <Image Source="rectangularforsub.png" WidthRequest="180"/>
-                                <Label Text="12" FontSize="70" Margin="47, 5"/>
-                                <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
-                            </RelativeLayout>
-                            <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
-                        </StackLayout>
-                        <Label Text="1 000₽ в первый год"/>
-                        <Label Text="далее 2 349 в год"/>
-                        <Button Text="Оформить подписку" Style="{StaticResource Sub}"/>
-                    </StackLayout>
-                    
-                    <StackLayout>
-                        <StackLayout BackgroundColor="#1263DE">
-                            <Label Margin="10, 20, 10, 10" HorizontalOptions="CenterAndExpand" Text="Premium" FontSize="30"/>
-                            <RelativeLayout>
-                                <Image Source="rectangularforsub.png" WidthRequest="180"/>
-                                <Label Text="12" FontSize="70" Margin="47, 5"/>
-                                <Label Text="Месяцев" Margin="50, 95, 60, 0" BackgroundColor="#1263DE"  HorizontalTextAlignment="Center" WidthRequest="80"/>
-                            </RelativeLayout>
-                            <Label Margin="10, 20, 10, 30" HorizontalOptions="CenterAndExpand" Text="Все фильмы и сериалы" FontSize="10"/>
-                        </StackLayout>
-                        <Label Text="1 000₽ в первый год"/>
-                        <Label Text="далее 2 349 в год"/>
-                        <Button Text="Оформить подписку"  Style="{StaticResource Sub}"/>
-                    </StackLayout>
-                </StackLayout>
-
+                
             </StackLayout>
 
         </ScrollView>
