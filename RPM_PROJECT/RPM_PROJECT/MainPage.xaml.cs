@@ -13,6 +13,14 @@ namespace RPM_PROJECT
         public MainPage()
         {
             InitializeComponent();
+
+            StackLayout stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += GoToPlayer;
+            stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+            stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill});
+            StackMovie.Children.Add(stackLayout);
+            
         }
 
         private async void GoToPlayer(object sender, EventArgs e)
