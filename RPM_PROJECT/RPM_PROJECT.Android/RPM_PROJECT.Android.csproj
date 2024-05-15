@@ -128,6 +128,7 @@
     <AndroidResource Include="Resources\drawable\anime.png" />
     <AndroidResource Include="Resources\drawable\banner_hamster.png" />
     <Content Include="Resources\drawable\cover.png" />
+    <AndroidResource Include="Resources\xml\network_security_config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
