@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RPM_PROJECT
@@ -140,16 +141,16 @@ namespace RPM_PROJECT
             }
         }
 
-        private void Profile(object sender, EventArgs e)
+        private async void Profile(object sender, EventArgs e)
         {
-            if (1 == 1) // Вошёл ли в аккаунт пользователь
+            if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
             else
             {
                 ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
-                if(1 == 1) // Какая подписка у пользователя
+                if (1 == 1) // Какая подписка у пользователя
                 {
                     twoLabel.Text = "Сериалы на основе ваших предпочтений";
                     movie.IsVisible = true;
@@ -195,7 +196,9 @@ namespace RPM_PROJECT
 
         private void Exit(object sender, EventArgs e)
         {
-
+            Preferences.Remove("isLogin");
+            Preferences.Remove("token");
+            Profile(sender, e);
         }
     }
 }
