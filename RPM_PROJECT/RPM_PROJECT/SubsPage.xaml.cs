@@ -1,8 +1,10 @@
-﻿using System;
+﻿using RPM_PROJECT.api.HttpEntitie;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RPM_PROJECT.api;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,34 +14,37 @@ namespace RPM_PROJECT
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SubsPage : ContentPage
 	{
-		public SubsPage ()
-		{
-			InitializeComponent ();
-            BurgerSlider.TranslateTo(-300, 0, 0);
-            ProfileSlider.TranslateTo(300, 0, 0);
-
-
-            // Отрисовка подписок
-            StackLayout stackLayout = new StackLayout();
-            StackLayout stackLayout2 = new StackLayout();
-            StackLayout RealStack = new StackLayout();
-            RelativeLayout relativeLayout = new RelativeLayout();
-
-            for(int i=0; i < 6; i++)
+        StackLayout stackLayout = new StackLayout();
+        StackLayout stackLayout2 = new StackLayout();
+        StackLayout RealStack = new StackLayout();
+        RelativeLayout relativeLayout = new RelativeLayout();
+        protected override async void OnAppearing()
+        {
+            var subsribes = await API.GetAllSubscribe();
+            foreach (Subsribe sub in subsribes)
             {
+                string colour;
+                var price = sub.Price;
+                if (price < 300) colour = "#C39028";
+                else if (price < 750) colour = "#1263DE";
+                else if (price < 850) colour = "#5F7C8D";
+                else if (price<2200) colour = "#1263DE";
+                else colour = "#5F7C8D";
+
                 stackLayout = new StackLayout
                 {
                     Margin = new Thickness(50, 10),
                 };
                 RealStack = new StackLayout()
                 {
-                    BackgroundColor = Color.FromHex("#1263DE"),
+                    BackgroundColor = Color.FromHex(colour),
                     Children = {
                         new Label
                     {
                         Margin = new Thickness(10, 40, 10, 70),
                         HorizontalOptions = LayoutOptions.CenterAndExpand,
-                        Text = "Premium",
+                        TextColor = Color.FromHex("#FFFFFF"),
+                        Text = sub.Name,
                         FontSize = 40
                     }
                 }
@@ -50,14 +55,8 @@ namespace RPM_PROJECT
                 relativeLayout.Children.Add(new Image()
                 {
                     Source = "rectangularforsub.png",
-                    Margin = new Thickness(35, 0)
-                }, Constraint.Constant(0));
-                relativeLayout.Children.Add(new Label()
-                {
-                    Text = "12",
-                    FontSize = 70,
-                    TextColor = Color.White,
-                    Margin = new Thickness(48, 5)
+                    Margin = new Thickness(35, 0),
+                    IsVisible = false
                 }, Constraint.Constant(0));
                 relativeLayout.Children.Add(new Label()
                 {
@@ -65,10 +64,17 @@ namespace RPM_PROJECT
                     Margin = new Thickness(49, 95, 0, 50),
                     TextColor = Color.White,
                     FontSize = 60,
-                    BackgroundColor = Color.FromHex("#1263DE"),
                     HorizontalTextAlignment = TextAlignment.Center,
                     WidthRequest = 80
                 }, Constraint.Constant(0));
+                relativeLayout.Children.Add(new Label()
+                {
+                    Text = sub.CountMonth.ToString(),
+                    FontSize = 80,
+                    TextColor = Color.White,
+                    Margin = new Thickness(48, 5)
+                }, Constraint.Constant(0));
+
 
                 RealStack.Children.Add(relativeLayout);
                 RealStack.Children.Add(new Label
@@ -76,7 +82,7 @@ namespace RPM_PROJECT
                     Margin = new Thickness(10, 40, 10, 30),
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     TextColor = Color.White,
-                    Text = "Все фильмы и сериалы",
+                    Text = sub.Title,
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
                 });
 
@@ -89,11 +95,7 @@ namespace RPM_PROJECT
 
                     new Label
                         {
-                            Text = "1 000₽ в первый год",  FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
-                        },
-                    new Label
-                        {
-                            Text = "далее 2 349 в год", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
+                            Text = sub.Description,  FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
                         },
                     new Button
                         {
@@ -116,27 +118,42 @@ namespace RPM_PROJECT
             {
                 VerticalOptions = LayoutOptions.EndAndExpand,
                 Children =
-    {
-        new StackLayout
-        {
-            Orientation = StackOrientation.Horizontal,
-            HorizontalOptions = LayoutOptions.Center,
-            Spacing = 20,
-            Children =
-            {
-                new Image { Source = "vk.png" },
-                new Image { Source = "tg.png" },
-                new Image { Source = "chviter.png" }
-            }
-        },
-        new Label
-        {
-            HorizontalOptions = LayoutOptions.Center,
-            Text = "Мы всегда готовы вам помочь"
-        }
-    }
+                {
+                    new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Spacing = 20,
+                        Children =
+                        {
+                            new Image { Source = "vk.png" },
+                            new Image { Source = "tg.png" },
+                            new Image { Source = "chviter.png" }
+                        }
+                    },
+                    new Label
+                    {
+                        HorizontalOptions = LayoutOptions.Center,
+                        Text = "Мы всегда готовы вам помочь"
+                    }
+                }
             };
             scroll.Children.Add(stackLayout1);
+            base.OnAppearing();
+        }
+
+
+        public SubsPage ()
+		{
+			InitializeComponent ();
+            BurgerSlider.TranslateTo(-300, 0, 0);
+            ProfileSlider.TranslateTo(300, 0, 0);
+
+
+            // Отрисовка подписок
+
+
+
         }
         private void ClosePanel(object sender, EventArgs e)
         {
