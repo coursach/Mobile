@@ -25,11 +25,49 @@ namespace RPM_PROJECT
                     var path = await API.GetImageProfile(movie.ImagePath);
                     stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
                     tapGestureRecognizer = new TapGestureRecognizer();
-                    //tapGestureRecognizer.Tapped += GoToPlayer;
+                    tapGestureRecognizer.Tapped += GoToPlayer;
                     stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                    stackLayout.ClassId = movie.Id.ToString();
                     stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
                     movieContent.Children.Add(stackLayout);
                 }
+                movie.IsVisible = true;
+            }
+            if (types == 1)
+            {
+                StackLayout stackLayout = new StackLayout();
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                var result = await API.GetAllMovie();
+                foreach (var movie in result)// Третий скрол фильмы
+                {
+                    var path = await API.GetImageProfile(movie.ImagePath);
+                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                    tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += GoToPlayer;
+                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                    stackLayout.ClassId = movie.Id.ToString();
+                    stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                    historyContent.Children.Add(stackLayout);
+                }
+                serial.IsVisible = true;
+            }
+            if (types == 2)
+            {
+                StackLayout stackLayout = new StackLayout();
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                var result = await API.GetAllAnime();
+                foreach (var movie in result)// Третий скрол фильмы
+                {
+                    var path = await API.GetImageProfile(movie.ImagePath);
+                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                    tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += GoToPlayer;
+                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                    stackLayout.ClassId = movie.Id.ToString();
+                    stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                    animeContent.Children.Add(stackLayout);
+                }
+                anime.IsVisible = true;
             }
         }
         int types = 0;
@@ -47,6 +85,11 @@ namespace RPM_PROJECT
             types = type;
             
 		}
+        private void GoToPlayer(object sender, EventArgs e)
+        {
+
+            Navigation.PushAsync(new WatchPage(int.Parse((sender as StackLayout).ClassId)));
+        }
         private void ClosePanel(object sender, EventArgs e)
         {
             if (BurgerSlider.TranslationX != -300)
@@ -79,23 +122,20 @@ namespace RPM_PROJECT
                 if (1 == 1) // Какая подписка у пользователя
                 {
 
-                    movie.IsVisible = true;
-                    anime.IsVisible = true;
-                    history.IsVisible = true;
                 }
             }
         }
         private void Anime(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage( types));
+            Navigation.PushAsync(new MoviesPage(2));
         }
         private void Movies(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage(types));
+            Navigation.PushAsync(new MoviesPage(0));
         }
         private void Serials(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage(types));
+            Navigation.PushAsync(new MoviesPage(1));
         }
         private void My(object sender, EventArgs e)
         {
