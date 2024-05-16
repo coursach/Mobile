@@ -1,9 +1,11 @@
-﻿using System;
+﻿using RPM_PROJECT.api;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using RPM_PROJECT.api;
 
@@ -101,16 +103,22 @@ namespace RPM_PROJECT
             }
         }
 
-        private void Profile(object sender, EventArgs e)
+        private async void Profile(object sender, EventArgs e)
         {
-            if (1 == 1) // Вошёл ли в аккаунт пользователь
+            if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
             else
             {
+                /*var path = API.GetUser();
+                ava.ImageSource = path.Result.ImageUrl;
+                ava.Text = "";
+                ProfileAva.Source = path.Result.ImageUrl;
+                ProfileEmail.Text = path.Result.Email;
+                ProfileName.Text = path.Result?.Surname + path.Result?.Name;*/
                 ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
-                if(1 == 1) // Какая подписка у пользователя
+                if (1 == 1) // Какая подписка у пользователя
                 {
                 
                     movie.IsVisible = true;
@@ -157,7 +165,9 @@ namespace RPM_PROJECT
 
         private void Exit(object sender, EventArgs e)
         {
-
+            Preferences.Remove("isLogin");
+            Preferences.Remove("token");
+            
         }
     }
 }

@@ -40,7 +40,7 @@ namespace RPM_PROJECT
         {
             if(email.Text.Length <= 2) return false;
             if(password.Text.Length <= 0) return false;
-            if (password2.Text.Length <= 0) return false;
+            if (password2.Text.Length <= 0 && password2.IsVisible) return false;
             if(!email.Text.Contains("@")) return false;
             try{
                 char a = email.Text[email.Text.IndexOf("@") + 1], b = email.Text[email.Text.IndexOf("@") - 1];

@@ -136,10 +136,10 @@
                     <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
                 <StackLayout Margin="10">
-                    <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium"/>
-                    <Label Text="cheito@mail.ru" TextColor="Gray" />
+                    <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium" x:Name="ProfileName"/>
+                    <Label Text="cheito@mail.ru" TextColor="Gray" x:Name="ProfileEmail"/>
                 </StackLayout>
-                <Image Source="ava.png" Grid.Column="1"/>
+                <Image Source="ava.png" Grid.Column="1" x:Name="ProfileAva"/>
             </Grid>
             <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}" Grid.Row="1" HorizontalOptions="Fill" FontSize="Header"/>
             <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}" Grid.Row="2" HorizontalOptions="Fill" FontSize="Header"/>
