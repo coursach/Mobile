@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using RPM_PROJECT.api;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace RPM_PROJECT
 {
@@ -27,6 +28,7 @@ namespace RPM_PROJECT
 
             MainPage = new NavigationPage(new MainPage());
             API.Alert = new Alert(MainPage);
+            API.Token = Preferences.Get("token", "");
         }
 
         protected override void OnStart()

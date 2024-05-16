@@ -23,7 +23,7 @@ namespace RPM_PROJECT.api
             PropertyNameCaseInsensitive = true,
         };
 
-        public static string Token { private set; get; }
+        public static string Token { set; private get; }
         public static IError Alert { set; get; }
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)
@@ -86,7 +86,7 @@ namespace RPM_PROJECT.api
 
         }
 
-        public static async ValueTask<bool> Login(AuthData data)
+        public static async ValueTask<string > Login(AuthData data)
         {
             var httpClient = new HttpClient();
 
@@ -95,13 +95,13 @@ namespace RPM_PROJECT.api
                 if (!response.IsSuccessStatusCode)
                 {
                     await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                    return false;
+                    return "";
                 }
 
                 var result = await response.Content.ReadFromJsonAsync<Token>();
                 Token = result.TokenValue;
 
-                return true ;
+                return result.TokenValue;
             }
         }
 
