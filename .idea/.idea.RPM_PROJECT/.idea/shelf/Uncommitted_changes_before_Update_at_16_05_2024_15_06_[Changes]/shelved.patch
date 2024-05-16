@@ -1,0 +1,23 @@
+Index: RPM_PROJECT/RPM_PROJECT/RegPage.xaml.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\r\nusing System.Data;\r\nusing RPM_PROJECT.api;\r\nusing RPM_PROJECT.api.HttpEntitie;\r\nusing Xamarin.Essentials;\r\nusing Xamarin.Forms;\r\nusing Xamarin.Forms.Xaml;\r\n\r\nnamespace RPM_PROJECT\r\n{\r\n\t[XamlCompilation(XamlCompilationOptions.Compile)]\r\n\tpublic partial class RegPage : ContentPage\r\n\t{\r\n\t\tpublic RegPage ()\r\n\t\t{\r\n\t\t\tInitializeComponent ();\r\n\t\t}\r\n\r\n        private void Button_Clicked(object sender, EventArgs e)\r\n        {\r\n            if(btn.Text == \"Зарегестрироваться\")\r\n            {\r\n                btn.Text = \"Войти\";\r\n                Entr.BackgroundColor = Color.FromHex(\"#1392DC\");\r\n                Reg.BackgroundColor = Color.FromHex(\"#000000\");\r\n                password2.IsVisible = false;\r\n            }\r\n        }\r\n\r\n        private void Button_Clicked_1(object sender, EventArgs e)\r\n        {\r\n            if (btn.Text == \"Войти\")\r\n            {\r\n                btn.Text = \"Зарегестрироваться\";\r\n                Reg.BackgroundColor = Color.FromHex(\"#1392DC\");\r\n                Entr.BackgroundColor = Color.FromHex(\"#000000\");\r\n                password2.IsVisible = true;\r\n            }\r\n        }\r\n        public bool CheckData()\r\n        {\r\n            if(email.Text.Length <= 2) return false;\r\n            if(password.Text.Length <= 0) return false;\r\n            if (password2.Text.Length <= 0) return false;\r\n            if(!email.Text.Contains(\"@\")) return false;\r\n            try{\r\n                char a = email.Text[email.Text.IndexOf(\"@\") + 1], b = email.Text[email.Text.IndexOf(\"@\") - 1];\r\n            }\r\n            catch\r\n            {\r\n                return false;\r\n            }\r\n            return true;\r\n        }\r\n        private async void btn_Clicked(object sender, EventArgs e)\r\n        {\r\n            if(CheckData())\r\n            {\r\n                if (btn.Text == \"Войти\")\r\n                {\r\n                    var result = await API.Login(new AuthData { Email = email.Text, Password = password.Text });\r\n                    if (!result)\r\n                        return;\r\n\r\n                    Preferences.Set(\"isLogin\", true);\r\n                    await Navigation.PushAsync(new MainPage());\r\n                }\r\n                else\r\n                {\r\n                    if (password.Text == password2.Text)\r\n                    {\r\n                        var result = await API.Registration(new AuthData { Email = email.Text, Password = password.Text });\r\n                        if (!result)\r\n                            return;\r\n                        btn.Text = \"Войти\";\r\n                        Entr.BackgroundColor = Color.FromHex(\"#1392DC\");\r\n                        Reg.BackgroundColor = Color.FromHex(\"#000000\");\r\n                        password2.IsVisible = false;\r\n                    }\r\n                    else\r\n                    {\r\n                        await DisplayAlert(\"Error\", \"Не верный пароль\", \"Ok\");\r\n                    }\r\n                }\r\n            }\r\n            else\r\n            {\r\n                await DisplayAlert(\"Error\", \"Не верные данные\", \"Ok\");\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RPM_PROJECT/RPM_PROJECT/RegPage.xaml.cs b/RPM_PROJECT/RPM_PROJECT/RegPage.xaml.cs
+--- a/RPM_PROJECT/RPM_PROJECT/RegPage.xaml.cs	
++++ b/RPM_PROJECT/RPM_PROJECT/RegPage.xaml.cs	
+@@ -59,9 +59,10 @@
+                 if (btn.Text == "Войти")
+                 {
+                     var result = await API.Login(new AuthData { Email = email.Text, Password = password.Text });
+-                    if (!result)
++                    if (result == "")
+                         return;
+-
++                    
++                    Preferences.Set("token", result);
+                     Preferences.Set("isLogin", true);
+                     await Navigation.PushAsync(new MainPage());
+                 }

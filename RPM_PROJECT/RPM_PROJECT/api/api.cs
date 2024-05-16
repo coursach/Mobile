@@ -24,7 +24,7 @@ namespace RPM_PROJECT.api
             PropertyNameCaseInsensitive = true,
         };
 
-        public static string Token { set; private get; }
+        public static string Token { set; get; }
         public static IError Alert { set; get; }
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)

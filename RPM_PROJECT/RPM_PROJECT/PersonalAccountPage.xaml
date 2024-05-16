@@ -18,22 +18,25 @@
 
             <Image Source="ava.png" x:Name="image" HeightRequest="250" WidthRequest="250" BackgroundColor="#000000" />
 
-            <Button Text="Обновить фотографию" BackgroundColor="#1263DE" TextColor="White" />
+            <Button Text="Обновить фотографию" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdateImageClick"/>
             <!--Clicked="Button_Clicked_1"-->
 
             <Label Text="Основная почта"/>
             <Entry Placeholder="Ваш email" x:Name="Email" MaxLength="20"/>
+            <Button Text="Обновить email" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdateEmailClick"/>
             
             <Label  Text="Пароль"/>
             <Entry Placeholder="Пароль" x:Name="password" MaxLength="20" IsPassword="True"/>
+            <Button Text="Обновить пароль" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdatePasswordClick"/>
             
             <Label  Text="Имя"/>
             <Entry Placeholder="Имя" x:Name="Name" MaxLength="20"/>
+            <Button Text="Обновить имя" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdateNameClick"/>
             
             <Label  Text="Фамилия"/>
             <Entry Placeholder="Фамилия" x:Name="Surname" MaxLength="20"/>
 
-            <!--<Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked"/>-->
+            <Button Text="Обновить фамилию" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdateSurnameClick"/>
             
         </StackLayout>
     </ScrollView>
