@@ -1,10 +1,10 @@
-﻿using RPM_PROJECT.api;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RPM_PROJECT.api;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +15,22 @@ namespace RPM_PROJECT
 	{
         protected override async void OnAppearing()
         {
-            if(types == 0)
+            if (Preferences.Get("isLogin", false))
+            {
+                ava.IsVisible = false;
+                var user = await API.GetUser();
+                var path = await API.GetImageProfile(user.ImageUrl);
+
+                avaImage.IsVisible = true;
+                avaImage.Source = ImageSource.FromStream(() => path);
+                avaImage.Aspect = Aspect.AspectFill;
+                ProfileName.Text = user.Name;
+                ProfileEmail.Text = user.Email;
+                var path1 = await API.GetImageProfile(user.ImageUrl);
+                ProfileAva.Source = ImageSource.FromStream(() => path1);
+                ProfileAva.Aspect = Aspect.AspectFill;
+            }
+            if (types == 0)
             {
                 StackLayout stackLayout = new StackLayout();
                 var tapGestureRecognizer = new TapGestureRecognizer();
@@ -112,17 +127,13 @@ namespace RPM_PROJECT
 
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2) // Вошёл ли в аккаунт пользователь
+            if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
             else
             {
                 ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
-                if (1 == 1) // Какая подписка у пользователя
-                {
-
-                }
             }
         }
         private void Anime(object sender, EventArgs e)
@@ -151,11 +162,15 @@ namespace RPM_PROJECT
         }
         private void ToMainPage(object sender, EventArgs e)
         {
-
+            Navigation.PushAsync(new MainPage());
         }
         private void Exit(object sender, EventArgs e)
         {
-
+            Preferences.Remove("isLogin");
+            Preferences.Remove("token");
+            ava.IsVisible = true;
+            avaImage.IsVisible = false;
+            ProfileSlider.TranslateTo(300, 0, 0);
         }
     }
 }
