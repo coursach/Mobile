@@ -18,7 +18,8 @@
 
             <Image Source="ava.png" x:Name="image" HeightRequest="250" WidthRequest="250" BackgroundColor="#000000" />
 
-            <Button Text="Обновить фотографию" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked_1"/>
+            <Button Text="Обновить фотографию" BackgroundColor="#1263DE" TextColor="White" />
+            <!--Clicked="Button_Clicked_1"-->
 
             <Label Text="Основная почта"/>
             <Entry Placeholder="Ваш email" x:Name="Email" MaxLength="20"/>
@@ -32,7 +33,7 @@
             <Label  Text="Фамилия"/>
             <Entry Placeholder="Фамилия" x:Name="Surname" MaxLength="20"/>
 
-            <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked"/>
+            <!--<Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked"/>-->
             
         </StackLayout>
     </ScrollView>

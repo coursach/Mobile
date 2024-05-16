@@ -5,7 +5,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
     <ContentPage.Content>
         <StackLayout>
-            <xct:MediaElement Source="ms-appdata:///temp/xamarinVideo.mp4" ShowsPlaybackControls="True" />
+            <xct:MediaElement Source="https://sec.ch9.ms/ch9/5d93/a1eab4bf-3288-4faf-81c4-294402a85d93/XamarinShow_mid.mp4" ShowsPlaybackControls="True" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

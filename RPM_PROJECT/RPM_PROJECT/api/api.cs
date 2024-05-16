@@ -201,7 +201,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Вам не доступен контент из-за уровня подписки", "пожалуйста приобритите подписку", _displayOk);
                     return false;
                 }
 
