@@ -25,6 +25,11 @@ using Android.App;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
+[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaAudio)]
+[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaImages)]
+[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaVideo)]
+
 // Add some common permissions, these can be removed if not needed
 [assembly: UsesPermission(Android.Manifest.Permission.Internet)]
 [assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
+[assembly: UsesPermission(Android.Manifest.Permission.ReadExternalStorage)]

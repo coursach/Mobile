@@ -55,16 +55,26 @@ namespace RPM_PROJECT
 
         private async void UpdateImageClick(object sender, EventArgs e)
         {
-            var result = await FilePicker.PickAsync(new PickOptions
+            try
             {
-                FileTypes = FilePickerFileType.Png,
-            });
+                var result = await MediaPicker.PickPhotoAsync();
 
-            var isValid = await API.UpdateImgeUser(result.FileName);
-            if (isValid)
-                return;
+                if (!result.FileName.EndsWith(".jpeg") || !result.FileName.EndsWith(".png") || !result.FileName.EndsWith(".jpg"))
+                {
+                    await DisplayAlert(_invalidData, "Выберите jpg или png формат", _isOk);
+                    return;
+                }
 
-            OnAppearing();
+                var isValid = await API.UpdateImgeUser(result.FileName);
+                if (isValid)
+                    return;
+
+                OnAppearing();
+            } 
+            catch
+            {
+                await DisplayAlert("Ошибка при чтении хранилища", "Разрешите права на чтение", _isOk);
+            }
         }
 
         private async void UpdateNameClick(object sender, EventArgs e)
