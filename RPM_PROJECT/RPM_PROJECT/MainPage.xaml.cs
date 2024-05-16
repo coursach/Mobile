@@ -15,6 +15,21 @@ namespace RPM_PROJECT
     {
         protected override async void OnAppearing()
         {
+            if (Preferences.Get("isLogin", false))
+            {
+                ava.IsVisible = false;
+                var user = await API.GetUser();
+                var path = await API.GetImageProfile(user.ImageUrl);
+                
+                avaImage.IsVisible = true;
+                avaImage.Source = ImageSource.FromStream(() => path);
+                avaImage.Aspect = Aspect.AspectFill;
+                ProfileName.Text = user.Name;
+                ProfileEmail.Text = user.Email;
+                var path1 = await API.GetImageProfile(user.ImageUrl);
+                ProfileAva.Source = ImageSource.FromStream(() => path1);
+                ProfileAva.Aspect = Aspect.AspectFill;
+            }
             StackLayout stackLayout = new StackLayout();
             var tapGestureRecognizer = new TapGestureRecognizer();
             var result = await API.GetAllMovie();
@@ -55,6 +70,7 @@ namespace RPM_PROJECT
                 stackLayout.ClassId = movie.Id.ToString(); 
                 historyContent.Children.Add(stackLayout);
             }
+
         }
         public MainPage()
         {
@@ -167,7 +183,9 @@ namespace RPM_PROJECT
         {
             Preferences.Remove("isLogin");
             Preferences.Remove("token");
-            
+            ava.IsVisible = true;
+            avaImage.IsVisible = false;
+            ProfileSlider.TranslateTo(300, 0, 0);
         }
     }
 }

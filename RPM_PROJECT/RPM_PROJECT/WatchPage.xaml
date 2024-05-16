@@ -52,22 +52,17 @@
                     <TapGestureRecognizer Tapped="ClosePanel"/>
                 </StackLayout.GestureRecognizers>
 
+                <ScrollView>
+                    <StackLayout Padding="25">
 
-                <StackLayout Padding="25">
+                        <Label x:Name="name" Text="О моём перерождении в слизь" FontSize="45" TextColor="White"/>
+                        <Image x:Name="image" Source="anime.png" Aspect="AspectFill" HeightRequest="400" />
+                        <Label Text="Описание: "/>
+                        <Label x:Name="description_details" Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
+                        <Button x:Name="button" Clicked="Button_Clicked" Text="Посмотреть" FontSize="Large" IsVisible="false"/>
 
-                    <Label x:Name="name" Text="О моём перерождении в слизь" FontSize="45" TextColor="White"/>
-                    <Image x:Name="image" Source="anime.png" Aspect="AspectFill" HeightRequest="400" />
-                    <Label Text="Описание: "/>
-                    <Label x:Name="description_details" Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
-
-                    <StackLayout>
-                        <xct:MediaElement ShowsPlaybackControls="True"/>
-                        <WebView Source="https://www.youtube.com/embed/X-RUD1DME90?si=FBOJcDpbrHX5jQLj" x:Name="WebView" >
-                        </WebView>
-                        
                     </StackLayout>
-                </StackLayout>
-
+                </ScrollView>
                 <StackLayout VerticalOptions="EndAndExpand">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
                         <Image Source="vk.png"/>

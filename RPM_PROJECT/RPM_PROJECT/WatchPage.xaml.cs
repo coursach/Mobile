@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RPM_PROJECT.api;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +13,7 @@ namespace RPM_PROJECT
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WatchPage : ContentPage
     {
+        private string path;
         int Index;
         protected override async void OnAppearing()
         {
@@ -20,6 +22,9 @@ namespace RPM_PROJECT
             description_details.Text = result.DescriptionDetails;
             var path = await API.GetImageProfile(result.ImagePath);
             image.Source = ImageSource.FromStream(() => path);
+            var hehehehhee = await API.GetContent(Index);
+            if(hehehehhee) button.IsVisible = true;
+
 
         }
         public WatchPage()
@@ -100,6 +105,11 @@ namespace RPM_PROJECT
         private void Exit(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new MoviePage());
         }
     }
 }

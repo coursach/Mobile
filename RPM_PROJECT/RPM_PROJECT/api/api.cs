@@ -29,8 +29,8 @@ namespace RPM_PROJECT.api
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)
         {
-            const string emailField = "email";
-            const string passwordField = "password";
+            const string emailField = "Email";
+            const string passwordField = "Password";
         
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
@@ -199,27 +199,26 @@ namespace RPM_PROJECT.api
 
             using (var response = await httpClient.PostAsync(_baseApi + "/user/get/content/" + id.ToString(), null))
             {
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
                     await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
                     return false;
                 }
 
-                using (var file = await response.Content.ReadAsStreamAsync())
-                {
-                    if (File.Exists("ms-appdata:///temp/temp.mp4"))
-                        File.Delete("ms-appdata:///temp/temp.mp4");
+                var folder = Path.GetTempPath();
+                var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
 
-                    using (var fileStream = File.Create("ms-appdata:///temp/temp.mp4"))
-                    {
-                        file.Seek(0, SeekOrigin.Begin);
-                        file.CopyTo(fileStream);
-                    }
+                var input = await response.Content.ReadAsByteArrayAsync();
+                using (var output = new BinaryWriter(File.Open(fullPath, FileMode.OpenOrCreate)))
+                {
+                    output.Write(input);
                 }
 
                 return true;
             }
         }
+
+
 
         public static async ValueTask<ContentInfo> GetContentInfo(int id)
         {

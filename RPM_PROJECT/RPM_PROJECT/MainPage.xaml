@@ -43,6 +43,7 @@
             </Grid.ColumnDefinitions>
             <Button ImageSource="burg.png" FontSize="Large" Text="KINOHUB" Grid.Column="0" Clicked="OpenBurger"/>
             <Button x:Name="ava" FontSize="Header" Text="Войти" Grid.Column="3" ImageSource="" Clicked="Profile"/>
+            <ImageButton x:Name="avaImage" Grid.Column="3" IsVisible="false" Clicked="Profile" Source="" CornerRadius="45" Margin="5"  HorizontalOptions="Center"/>
         </Grid>
         <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
 
@@ -139,7 +140,7 @@
                     <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium" x:Name="ProfileName"/>
                     <Label Text="cheito@mail.ru" TextColor="Gray" x:Name="ProfileEmail"/>
                 </StackLayout>
-                <Image Source="ava.png" Grid.Column="1" x:Name="ProfileAva"/>
+                <ImageButton Source="ava.png" Grid.Column="1" x:Name="ProfileAva" WidthRequest="60" HeightRequest="20" CornerRadius="45" Margin="5" HorizontalOptions="Center"/>
             </Grid>
             <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}" Grid.Row="1" HorizontalOptions="Fill" FontSize="Header"/>
             <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}" Grid.Row="2" HorizontalOptions="Fill" FontSize="Header"/>

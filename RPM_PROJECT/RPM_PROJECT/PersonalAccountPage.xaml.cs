@@ -35,23 +35,6 @@ namespace RPM_PROJECT
             var regex = new Regex("^\\S+@\\S+\\.\\S+$");
             var result = regex.IsMatch(Email.Text);
             
-            if (result)
-            {
-                DisplayAlert("Не правильные данные", "Ошибка в почту", "Ок"); 
-                return false;
-            }
-
-            if (Name.Text.Length == 0 || Name.Text.Contains(" "))
-            {
-                DisplayAlert("Не правильные данные", "Ошибка в имени", "Ок");
-                return false;
-            }
-
-            if (Surname.Text.Length == 0 || Surname.Text.Contains(" "))
-            {
-                DisplayAlert("Не правильные данные", "Ошибка в фамилии", "Ок");
-                return false;
-            }
 
             if (password.Text.Contains(" "))
             {
@@ -69,14 +52,14 @@ namespace RPM_PROJECT
 
             if (password.Text.Length == 0)
             {
-                var result = await API.UpdateUserField(new UpdateUserSend { NameField = "password", NewValie = password.Text});
+                var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValie = password.Text});
                 if (!result)
                     return;
             }
 
-            await API.UpdateUserField(new UpdateUserSend { NameField = "email", NewValie = Email.Text });
-            await API.UpdateUserField(new UpdateUserSend { NameField = "name", NewValie = Name.Text });
-            await API.UpdateUserField(new UpdateUserSend { NameField = "surname", NewValie = Surname.Text });
+            await API.UpdateUserField(new UpdateUserSend { NameField = "Email", NewValie = Email.Text });
+            await API.UpdateUserField(new UpdateUserSend { NameField = "Name", NewValie = Name.Text });
+            await API.UpdateUserField(new UpdateUserSend { NameField = "Surname", NewValie = Surname.Text });
         }
 
         private async void Button_Clicked_1(object sender, EventArgs e)
