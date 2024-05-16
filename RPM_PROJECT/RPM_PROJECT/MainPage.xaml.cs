@@ -19,7 +19,7 @@ namespace RPM_PROJECT
             StackLayout stackLayout = new StackLayout();
             var tapGestureRecognizer = new TapGestureRecognizer();
 
-            if (1 == 1) // Зашёл ли пользователь в аккаунт
+            if (1 == 5) // Зашёл ли пользователь в аккаунт
             {
                 if(2 == 2) // есть ли подписка
                 {
@@ -142,7 +142,7 @@ namespace RPM_PROJECT
 
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2) // Вошёл ли в аккаунт пользователь
+            if (1 == 1) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
