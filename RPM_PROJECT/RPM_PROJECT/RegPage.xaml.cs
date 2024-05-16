@@ -16,46 +16,76 @@ namespace RPM_PROJECT
 			InitializeComponent ();
 		}
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
             if(btn.Text == "Зарегестрироваться")
             {
                 btn.Text = "Войти";
                 Entr.BackgroundColor = Color.FromHex("#1392DC");
                 Reg.BackgroundColor = Color.FromHex("#000000");
-                Password2.IsVisible = false;
+                password2.IsVisible = false;
             }
         }
 
-        private async void Button_Clicked_1(object sender, EventArgs e)
+        private void Button_Clicked_1(object sender, EventArgs e)
         {
             if (btn.Text == "Войти")
             {
                 btn.Text = "Зарегестрироваться";
                 Reg.BackgroundColor = Color.FromHex("#1392DC");
                 Entr.BackgroundColor = Color.FromHex("#000000");
-                Password2.IsVisible = true;
+                password2.IsVisible = true;
             }
         }
-
+        public bool CheckData()
+        {
+            if(email.Text.Length <= 2) return false;
+            if(password.Text.Length <= 0) return false;
+            if (password2.Text.Length <= 0) return false;
+            if(!email.Text.Contains("@")) return false;
+            try{
+                char a = email.Text[email.Text.IndexOf("@") + 1], b = email.Text[email.Text.IndexOf("@") - 1];
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
         private async void btn_Clicked(object sender, EventArgs e)
         {
-            if(btn.Text == "Войти")
+            if(CheckData())
             {
-                var result = await API.Login(new AuthData { Email = "", Password = "" });
+                if (btn.Text == "Войти")
+                {
+                    var result = await API.Login(new AuthData { Email = email.Text, Password = password.Text });
+                    if (!result)
+                        return;
 
-                Preferences.Set("isLogin", true);
-                await Navigation.PushAsync(new MainPage());
+                    Preferences.Set("isLogin", true);
+                    await Navigation.PushAsync(new MainPage());
+                }
+                else
+                {
+                    if (password.Text == password2.Text)
+                    {
+                        var result = await API.Registration(new AuthData { Email = email.Text, Password = password.Text });
+                        if (!result)
+                            return;
+                        btn.Text = "Войти";
+                        Entr.BackgroundColor = Color.FromHex("#1392DC");
+                        Reg.BackgroundColor = Color.FromHex("#000000");
+                        password2.IsVisible = false;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Не верный пароль", "Ok");
+                    }
+                }
             }
             else
             {
-                var result = await API.Registration(new AuthData { });
-                if (!result)
-                    return;
-                btn.Text = "Войти";
-                Entr.BackgroundColor = Color.FromHex("#1392DC");
-                Reg.BackgroundColor = Color.FromHex("#000000");
-                Password2.IsVisible = false;
+                await DisplayAlert("Error", "Не верные данные", "Ok");
             }
         }
     }
