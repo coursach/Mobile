@@ -6,6 +6,7 @@ using RPM_PROJECT.api.HttpEntitie;
 using System.Collections.Generic;
 using System.IO;
 using System.Transactions;
+using Xamarin.Essentials;
 
 
 namespace RPM_PROJECT.api
@@ -205,15 +206,17 @@ namespace RPM_PROJECT.api
                     return false;
                 }
 
-                var folder = Path.GetTempPath();
+                var folder = FileSystem.CacheDirectory;
                 var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
 
-                var input = await response.Content.ReadAsByteArrayAsync();
-                using (var output = new BinaryWriter(File.Open(fullPath, FileMode.OpenOrCreate)))
+                using (var input = await response.Content.ReadAsStreamAsync())
                 {
-                    output.Write(input);
+                    using (var outPut = await FileSystem.OpenAppPackageFileAsync(fullPath))
+                    {
+                        input.CopyTo(outPut);
+                    }
                 }
-
+               
                 return true;
             }
         }
