@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RPM_PROJECT.api;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,12 +12,30 @@ namespace RPM_PROJECT
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WatchPage : ContentPage
     {
+        int Index;
+        protected override async void OnAppearing()
+        {
+            var result = await API.GetContentInfo(Index);
+            name.Text = result.Name;
+            description_details.Text = result.DescriptionDetails;
+            var path = await API.GetImageProfile(result.ImagePath);
+            image.Source = ImageSource.FromStream(() => path);
+
+        }
         public WatchPage()
         {
             InitializeComponent();
             BurgerSlider.TranslateTo(-300, 0, 0);
             ProfileSlider.TranslateTo(300, 0, 0);
         }
+        public WatchPage(int index)
+        {
+            InitializeComponent();
+            Index = index;
+            BurgerSlider.TranslateTo(-300, 0, 0);
+            ProfileSlider.TranslateTo(300, 0, 0);
+        }
+
         private void ClosePanel(object sender, EventArgs e)
         {
             if (BurgerSlider.TranslationX != -300)

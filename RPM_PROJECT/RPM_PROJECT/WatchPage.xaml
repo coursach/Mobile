@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RPM_PROJECT.WatchPage"
-                                       NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              >
 
     <ContentPage.Resources>
@@ -54,13 +55,14 @@
 
                 <StackLayout Padding="25">
 
-                    <Label Text="О моём перерождении в слизь" FontSize="45"/>
-                    <Image Source="anime.png"/>
-                    <Label Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
+                    <Label x:Name="name" Text="О моём перерождении в слизь" FontSize="45" TextColor="White"/>
+                    <Image x:Name="image" Source="anime.png" Aspect="AspectFill" HeightRequest="400" />
+                    <Label Text="Описание: "/>
+                    <Label x:Name="description_details" Text="Чел умер от ножа, появился в пещере, жрал всё подряд, наткнулся на дракона, закентился с ним, побегал по пощере, вышел из пещеры, приручил племя гоблинов, потом понаприручал к себе ещё кучу хачей."/>
 
                     <StackLayout>
-
-                        <WebView Source="https://www.youtube.com/embed/BvyafSjv3xY?si=8pNGlTaAL0mWHJXJ" x:Name="WebView" >
+                        <xct:MediaElement ShowsPlaybackControls="True"/>
+                        <WebView Source="https://www.youtube.com/embed/X-RUD1DME90?si=FBOJcDpbrHX5jQLj" x:Name="WebView" >
                         </WebView>
                         
                     </StackLayout>

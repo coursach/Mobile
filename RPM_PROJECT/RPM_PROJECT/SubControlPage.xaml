@@ -11,9 +11,10 @@
     <StackLayout BackgroundColor="#000000">
         <StackLayout Margin="50, 180">
             <Label Text="Управление подпиской" FontSize="20" Margin="10"/>
-            <Label Text="Активная подписка"  HorizontalOptions="Center"/>
-            <Label Text="11.11.2077 PREMIUM 12 месяцев до 11.11.2078" />
-            <Button TextColor="White" BackgroundColor="#000000" Text="ОТКАЗАТЬСЯ ОТ ПОДПИСКИ"/>
+            <Label Text="Активная подписка" x:Name="subscribeType" HorizontalOptions="Center"/>
+            <Label Text="11.11.2077 PREMIUM 12 месяцев до 11.11.2078" x:Name="subscribeInfo"/>
+            <Button TextColor="White" BackgroundColor="#000000" Text="ОТКАЗАТЬСЯ ОТ ПОДПИСКИ" Clicked="Button_Clicked"
+                    x:Name="button"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

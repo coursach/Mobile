@@ -5,119 +5,80 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using RPM_PROJECT.api;
 
 namespace RPM_PROJECT
 {
     public partial class MainPage : ContentPage
     {
+        protected override async void OnAppearing()
+        {
+            StackLayout stackLayout = new StackLayout();
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            var result = await API.GetAllMovie();
+            foreach (var movie in result)// Третий скрол фильмы
+            {
+                var path = await API.GetImageProfile(movie.ImagePath);
+                stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += GoToPlayer;
+                stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                stackLayout.Children.Add(new Label {  Text = movie.Id.ToString(), IsVisible=false });
+                stackLayout.ClassId = movie.Id.ToString();
+                movieContent.Children.Add(stackLayout);
+            }
+            var result1 = await API.GetAllAnime();
+            foreach (var movie in result1)//Четвёртый скрол фильмы
+            {
+                var path = await API.GetImageProfile(movie.ImagePath);
+                stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += GoToPlayer;
+                stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                stackLayout.Children.Add(new Label { Text = movie.Id.ToString(), IsVisible = false });
+                stackLayout.ClassId = movie.Id.ToString();
+                animeContent.Children.Add(stackLayout);
+            }
+            var result2 = await API.GetAllMovie();
+            foreach (var movie in result2)
+            {
+                var path = await API.GetImageProfile(movie.ImagePath);
+                stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += GoToPlayer;
+                stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                stackLayout.ClassId = movie.Id.ToString(); 
+                historyContent.Children.Add(stackLayout);
+            }
+        }
         public MainPage()
         {
             InitializeComponent();
             BurgerSlider.TranslateTo(-300, 0, 0);
             ProfileSlider.TranslateTo(300, 0, 0);
 
-            StackLayout stackLayout = new StackLayout();
-            var tapGestureRecognizer = new TapGestureRecognizer();
-
-            if (1 == 5) // Зашёл ли пользователь в аккаунт
+            if (1 == 1) // Зашёл ли пользователь в аккаунт
             {
                 if(2 == 2) // есть ли подписка
                 {
-                    twoLabel.Text = "Сериалы рекомендованные к просмотру";
                     movie.IsVisible = true;
                     anime.IsVisible = true;
                     history.IsVisible = true;
 
-                    // Третий скрол фильмы
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                        tapGestureRecognizer = new TapGestureRecognizer();
-                        tapGestureRecognizer.Tapped += GoToPlayer;
-                        stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                        stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                        movieContent.Children.Add(stackLayout);
-                    }
-
-                    //Четвёртый скрол аниме
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                        tapGestureRecognizer = new TapGestureRecognizer();
-                        tapGestureRecognizer.Tapped += GoToPlayer;
-                        stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                        stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                        animeContent.Children.Add(stackLayout);
-                    }
+             
 
                     //Пятый скрол история
 
-                    for (int i = 0; i < 10; i++)
-                    {
-                        stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                        tapGestureRecognizer = new TapGestureRecognizer();
-                        tapGestureRecognizer.Tapped += GoToPlayer;
-                        stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                        stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                        historyContent.Children.Add(stackLayout);
-                    }
-                }
-                // Первый скрол                
 
-                for (int i = 0; i < 10; i++)
-                {
-                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                    tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += GoToPlayer;
-                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                    stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                    firstContent.Children.Add(stackLayout);
                 }
-
-                //Второй скрол
-                
-                for (int i = 0; i < 10; i++)
-                {
-                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                    tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += GoToPlayer;
-                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                    stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                    twoContent.Children.Add(stackLayout);
-                }
-
                 
             }
             else
             {
-                // Первый скрол
 
-                firstLabel.Text = "Топ 100 за месяц";
-
-                for(int i = 0; i < 10; i++)
-                {
-                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                    tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += GoToPlayer;
-                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                    stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                    firstContent.Children.Add(stackLayout);
-                }
-
-                //Второй скрол
-
-                twoLabel.Text = "Рекомендованные к просмотру";
-                for (int i = 0;i < 10; i++)
-                {
-                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
-                    tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += GoToPlayer;
-                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
-                    stackLayout.Children.Add(new Image { Source = "i_drive.png", Aspect = Aspect.AspectFill });
-                    twoContent.Children.Add(stackLayout);
-                }
             }
         }
         private void ClosePanel(object sender, EventArgs e)
@@ -151,7 +112,7 @@ namespace RPM_PROJECT
                 ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
                 if(1 == 1) // Какая подписка у пользователя
                 {
-                    twoLabel.Text = "Сериалы на основе ваших предпочтений";
+                
                     movie.IsVisible = true;
                     anime.IsVisible = true;
                     history.IsVisible = true;
@@ -161,7 +122,8 @@ namespace RPM_PROJECT
 
         private void GoToPlayer(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new WatchPage());
+            
+            Navigation.PushAsync(new WatchPage(int.Parse((sender as StackLayout).ClassId)));
         }
         private void Anime(object sender, EventArgs e)
         {
