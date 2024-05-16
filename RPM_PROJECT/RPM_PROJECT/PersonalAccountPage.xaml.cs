@@ -55,11 +55,21 @@ namespace RPM_PROJECT
 
         private async void UpdateImageClick(object sender, EventArgs e)
         {
+            var permission = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (permission != PermissionStatus.Granted)
+            {
+                var requestStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
+                if (requestStatus == PermissionStatus.Granted)
+                {
+                }
+                else return;
+            }
+
             try
             {
-                var result = await MediaPicker.PickPhotoAsync();
 
-                if (!result.FileName.EndsWith(".jpeg") || !result.FileName.EndsWith(".png") || !result.FileName.EndsWith(".jpg"))
+                var result = await MediaPicker.PickPhotoAsync();
+                if (!result.FileName.EndsWith(".jpeg") && !result.FileName.EndsWith(".png") && !result.FileName.EndsWith(".jpg"))
                 {
                     await DisplayAlert(_invalidData, "Выберите jpg или png формат", _isOk);
                     return;
@@ -69,8 +79,7 @@ namespace RPM_PROJECT
                 if (isValid)
                     return;
 
-                OnAppearing();
-            } 
+            }
             catch
             {
                 await DisplayAlert("Ошибка при чтении хранилища", "Разрешите права на чтение", _isOk);

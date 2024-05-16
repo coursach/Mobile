@@ -209,17 +209,18 @@ namespace RPM_PROJECT.api
                 var folder = FileSystem.CacheDirectory;
                 var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
 
-                if (!File.Exists(fullPath))
-                    File.Create(fullPath);
 
                 using (var input = await response.Content.ReadAsStreamAsync())
                 {
 
-                    using (var outPut = await FileSystem.OpenAppPackageFileAsync(fullPath))
+                    using (var outPut = File.Open(fullPath, FileMode.OpenOrCreate))
                     {
                         input.CopyTo(outPut);
                     }
                 }
+
+                if (File.Exists(fullPath))
+                   await  Alert.DisplayAlert("huy", fullPath, "ok");
                
                 return true;
             }
@@ -258,18 +259,21 @@ namespace RPM_PROJECT.api
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
-            var file = new ByteArrayContent(File.ReadAllBytes(path));
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", file))
+            using (var file = File.Open(path, FileMode.Open))
             {
+                using (var httpContent = new StreamContent(file))
+                {
+                    using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", httpContent))
+                    {
 
-                if (response.IsSuccessStatusCode)
-                    return true;
+                        if (response.IsSuccessStatusCode)
+                            return true;
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                return false;
+                        await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                        return false;
+                    }
+                }
             }
         }
-
     }
 }
