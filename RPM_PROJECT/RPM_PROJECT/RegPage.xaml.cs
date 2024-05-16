@@ -43,8 +43,6 @@ namespace RPM_PROJECT
             if(btn.Text == "Войти")
             {
                 var result = await API.Login(new AuthData { Email = "", Password = "" });
-                if (!result)
-                    return;
 
                 Preferences.Set("isLogin", true);
                 await Navigation.PushAsync(new MainPage());
