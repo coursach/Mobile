@@ -15,22 +15,24 @@
     <ScrollView Background="#000000">
         <StackLayout Margin="20" Spacing="10">
             <Label Text="Данные аккаунта" TextColor="White" FontSize="25"/>
-            
-            <Image Source="ava.png" HeightRequest="250" WidthRequest="250" BackgroundColor="#000000"/>
+
+            <Image Source="ava.png" x:Name="image" HeightRequest="250" WidthRequest="250" BackgroundColor="#000000" />
+
+            <Button Text="Обновить фотографию" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked_1"/>
 
             <Label Text="Основная почта"/>
-            <Entry Placeholder="Ваш email" />
+            <Entry Placeholder="Ваш email" x:Name="Email" MaxLength="20"/>
             
             <Label  Text="Пароль"/>
-            <Entry Placeholder="Пароль"/>
+            <Entry Placeholder="Пароль" x:Name="password" MaxLength="20" IsPassword="True"/>
             
             <Label  Text="Имя"/>
-            <Entry Placeholder="Имя"/>
+            <Entry Placeholder="Имя" x:Name="Name" MaxLength="20"/>
             
             <Label  Text="Фамилия"/>
-            <Entry Placeholder="Фамилия"/>
-            
-            <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White"/>
+            <Entry Placeholder="Фамилия" x:Name="Surname" MaxLength="20"/>
+
+            <Button Text="Сохранить" BackgroundColor="#1263DE" TextColor="White" Clicked="Button_Clicked"/>
             
         </StackLayout>
     </ScrollView>
