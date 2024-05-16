@@ -42,7 +42,7 @@ namespace RPM_PROJECT
 
 			await API.DeleteSubsribe();
 			Preferences.Set("haveSub", false);
-            OnAppearing();
+			await Navigation.PopAsync();
 		}
     }
 }

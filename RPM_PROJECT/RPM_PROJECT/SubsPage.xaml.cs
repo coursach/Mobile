@@ -108,7 +108,7 @@ namespace RPM_PROJECT
                         var result = await API.LinkUserWithSubscribe(sub.Id);
                         await DisplayAlert("Поздравляем", "Вы оформили подписку", "Ок");
                         Preferences.Set("haveSub", true);
-                        OnAppearing();
+                        await Navigation.PopAsync();
                     };
                 }
 

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RPM_PROJECT.api.HttpEntitie
 {
@@ -9,6 +8,6 @@ namespace RPM_PROJECT.api.HttpEntitie
         public string NameField { set; get; }
 
         [JsonPropertyName("information")]
-        public string NewValie { set; get; }
+        public string NewValue { set; get; }
     }
 }

@@ -6,6 +6,7 @@ using RPM_PROJECT.api.HttpEntitie;
 using System.Collections.Generic;
 using System.IO;
 using System.Transactions;
+using Xamarin.Essentials;
 
 
 namespace RPM_PROJECT.api
@@ -24,7 +25,7 @@ namespace RPM_PROJECT.api
             PropertyNameCaseInsensitive = true,
         };
 
-        public static string Token { set; private get; }
+        public static string Token { set; get; }
         public static IError Alert { set; get; }
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)
@@ -39,7 +40,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось обновить поле пользователя", response.ReasonPhrase ?? "", _displayOk);
                     return false;
                 }
 
@@ -62,7 +63,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось получить пользователя", "Вы навторизированы", _displayOk);
                     return null;
                 }
 
@@ -81,7 +82,7 @@ namespace RPM_PROJECT.api
                     return true;
 
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert("Ошибка регистрации", "Такая почта уже есть", _displayOk);
                 return false;
             }
 
@@ -95,7 +96,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Ошибка авторизации", "Не верная почта или пароль", _displayOk);
                     return "";
                 }
 
@@ -114,7 +115,7 @@ namespace RPM_PROJECT.api
             {
                 if(!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось получить подписки", response.ReasonPhrase ?? "", _displayOk);
                     return null;
                 }
 
@@ -135,7 +136,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось оформить подписку", "Такой подписки нет", _displayOk);
                     return false;
                 }
             }
@@ -153,7 +154,7 @@ namespace RPM_PROJECT.api
                 if (response.IsSuccessStatusCode)
                     return true;
                 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert("Не удалось удалит подписку", response.ReasonPhrase ?? "", _displayOk);
                 return false;
             }
 
@@ -169,7 +170,7 @@ namespace RPM_PROJECT.api
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadFromJsonAsync<Subsribe>();
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase ?? "", _displayOk);
                 return null;
             }
         }
@@ -205,15 +206,18 @@ namespace RPM_PROJECT.api
                     return false;
                 }
 
-                var folder = Path.GetTempPath();
+                var folder = FileSystem.CacheDirectory;
                 var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
 
-                var input = await response.Content.ReadAsByteArrayAsync();
-                using (var output = new BinaryWriter(File.Open(fullPath, FileMode.OpenOrCreate)))
-                {
-                    output.Write(input);
-                }
 
+                using (var input = await response.Content.ReadAsStreamAsync())
+                {
+
+                    using (var outPut = File.Open(fullPath, FileMode.OpenOrCreate))
+                    {
+                        input.CopyTo(outPut);
+                    }
+                }
                 return true;
             }
         }
@@ -247,20 +251,32 @@ namespace RPM_PROJECT.api
             return response;
         }
 
-        public static async ValueTask<bool> UpdateImgeUser(string path)
+        public static async ValueTask<bool> UpdateImageUserPng(string filePath) =>
+    await UpdateImgeUser(filePath, "image/png");
+
+        public static async ValueTask<bool> UpdateImageUserJpeg(string filePath) =>
+            await UpdateImgeUser(filePath, "image/jpeg");
+
+
+        private static async ValueTask<bool> UpdateImgeUser(string path, string typeImage)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
-            var file = new ByteArrayContent(File.ReadAllBytes(path));
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", file))
+            using (var file = File.Open(path, FileMode.Open))
             {
+                using (var httpContent = new StreamContent(file))
+                {
+                    httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(typeImage);
+                    using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", httpContent))
+                    {
 
-                if (response.IsSuccessStatusCode)
-                    return true;
+                        if (response.IsSuccessStatusCode)
+                            return true;
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                return false;
+                        await Alert.DisplayAlert("Не удалось обновить фотогафию пользователя", response.ReasonPhrase ?? "", _displayOk);
+                        return false;
+                    }
+                }
             }
         }
 
