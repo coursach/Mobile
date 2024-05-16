@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using RPM_PROJECT.api.HttpEntitie;
 using System.Collections.Generic;
 using System.IO;
+using System.Transactions;
 
 
 namespace RPM_PROJECT.api
@@ -23,7 +24,7 @@ namespace RPM_PROJECT.api
             PropertyNameCaseInsensitive = true,
         };
 
-        public static string Token { private set; get; }
+        public static string Token { set; private get; }
         public static IError Alert { set; get; }
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)
@@ -86,7 +87,7 @@ namespace RPM_PROJECT.api
 
         }
 
-        public static async ValueTask<bool> Login(AuthData data)
+        public static async ValueTask<string > Login(AuthData data)
         {
             var httpClient = new HttpClient();
 
@@ -95,13 +96,13 @@ namespace RPM_PROJECT.api
                 if (!response.IsSuccessStatusCode)
                 {
                     await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                    return false;
+                    return "";
                 }
 
                 var result = await response.Content.ReadFromJsonAsync<Token>();
                 Token = result.TokenValue;
 
-                return true ;
+                return result.TokenValue;
             }
         }
 
@@ -191,7 +192,7 @@ namespace RPM_PROJECT.api
             return await httpClient.GetStreamAsync(_baseApi + "/" + profileLink);
         }
 
-        public static async ValueTask<Stream> GetContent(int id)
+        public static async ValueTask<bool> GetContent(int id)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
@@ -199,10 +200,24 @@ namespace RPM_PROJECT.api
             using (var response = await httpClient.PostAsync(_baseApi + "/user/get/content/" + id.ToString(), null))
             {
                 if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadAsStreamAsync();
+                {
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    return false;
+                }
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
-                return null;
+                using (var file = await response.Content.ReadAsStreamAsync())
+                {
+                    if (File.Exists("ms-appdata:///temp/temp.mp4"))
+                        File.Delete("ms-appdata:///temp/temp.mp4");
+
+                    using (var fileStream = File.Create("ms-appdata:///temp/temp.mp4"))
+                    {
+                        file.Seek(0, SeekOrigin.Begin);
+                        file.CopyTo(fileStream);
+                    }
+                }
+
+                return true;
             }
         }
 

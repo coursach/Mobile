@@ -103,7 +103,7 @@ namespace RPM_PROJECT
 
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2) // Вошёл ли в аккаунт пользователь
+            if (1 == 1) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }

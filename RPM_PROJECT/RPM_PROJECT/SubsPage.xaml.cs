@@ -8,6 +8,7 @@ using RPM_PROJECT.api;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace RPM_PROJECT
 {
@@ -88,6 +89,29 @@ namespace RPM_PROJECT
 
                 stackLayout.Children.Add(RealStack);
 
+                var btn = new Button
+                {
+                    Text = Preferences.Get("haveSub", false) ? "Уже есть" : "Оформить подписку" ,
+                    CornerRadius = 20,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    Margin = new Thickness(0, 10, 0, 0),
+                    HeightRequest = 45,
+                    TextColor = Color.White,
+                    BackgroundColor = Color.FromHex("#1263DE"),
+                };
+
+                if (!Preferences.Get("haveSub", false))
+                {
+                    btn.Clicked += async (object sender, EventArgs e) =>
+                    {
+                        var result = await API.LinkUserWithSubscribe(sub.Id);
+                        await DisplayAlert("Поздравляем", "Вы оформили подписку", "Ок");
+                        Preferences.Set("haveSub", true);
+                        OnAppearing();
+                    };
+                }
+
                 stackLayout2 = new StackLayout()
                 {
                     Children =
@@ -97,17 +121,7 @@ namespace RPM_PROJECT
                         {
                             Text = sub.Description,  FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label))
                         },
-                    new Button
-                        {
-                            Text = "Оформить подписку",
-                            CornerRadius = 20,
-                            HorizontalOptions = LayoutOptions.StartAndExpand,
-                            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                            Margin = new Thickness(0, 10, 0, 0),
-                            HeightRequest = 45,
-                            TextColor= Color.White,
-                            BackgroundColor= Color.FromHex("#1263DE")
-                        }
+                        btn,
                 }
                 };
                 stackLayout.Children.Add(stackLayout2);
