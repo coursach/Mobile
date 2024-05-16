@@ -27,9 +27,9 @@
 
             </StackLayout>
 
-            <Entry Placeholder="Введите email" x:Name="email"/>
-            <Entry Placeholder="Введите пароль" x:Name="Password" IsPassword="True"/>
-            <Entry  Placeholder="Введите пароль повторно"  x:Name="Password2" IsPassword="True" IsVisible="False" />
+            <Entry Placeholder="Введите email" MaxLength="50" x:Name="email"/>
+            <Entry Placeholder="Введите пароль" MaxLength="50" x:Name="password" IsPassword="True"/>
+            <Entry  Placeholder="Введите пароль повторно" MaxLength="50" x:Name="password2" IsPassword="True" IsVisible="False" />
             <Button BackgroundColor="#4B687A" Text="Войти" TextColor="White" Margin="20" x:Name="btn" Clicked="btn_Clicked" />
         </StackLayout>
     </ContentPage.Content>
