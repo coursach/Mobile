@@ -25,26 +25,39 @@ namespace RPM_PROJECT
                 Reg.BackgroundColor = Color.FromHex("#000000");
                 Password2.IsVisible = false;
             }
-
-            var result = await API.Login(new AuthData { Email = "", Password = ""});
-            if (!result)
-                return;
-
-            Preferences.Set("isLogin", true);
         }
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
-            var result = await API.Registration(new AuthData { });
-            if (!result)
-                return;
-
             if (btn.Text == "Войти")
             {
                 btn.Text = "Зарегестрироваться";
                 Reg.BackgroundColor = Color.FromHex("#1392DC");
                 Entr.BackgroundColor = Color.FromHex("#000000");
                 Password2.IsVisible = true;
+            }
+        }
+
+        private async void btn_Clicked(object sender, EventArgs e)
+        {
+            if(btn.Text == "Войти")
+            {
+                var result = await API.Login(new AuthData { Email = "", Password = "" });
+                if (!result)
+                    return;
+
+                Preferences.Set("isLogin", true);
+                await Navigation.PushAsync(new MainPage());
+            }
+            else
+            {
+                var result = await API.Registration(new AuthData { });
+                if (!result)
+                    return;
+                btn.Text = "Войти";
+                Entr.BackgroundColor = Color.FromHex("#1392DC");
+                Reg.BackgroundColor = Color.FromHex("#000000");
+                Password2.IsVisible = false;
             }
         }
     }
