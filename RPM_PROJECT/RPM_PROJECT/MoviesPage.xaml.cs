@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RPM_PROJECT.api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,89 +13,89 @@ namespace RPM_PROJECT
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MoviesPage : ContentPage
 	{
+        protected override async void OnAppearing()
+        {
+            if(types == 0)
+            {
+                StackLayout stackLayout = new StackLayout();
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                var result = await API.GetAllMovie();
+                foreach (var movie in result)// Третий скрол фильмы
+                {
+                    var path = await API.GetImageProfile(movie.ImagePath);
+                    stackLayout = new StackLayout() { WidthRequest = 250, HeightRequest = 150 };
+                    tapGestureRecognizer = new TapGestureRecognizer();
+                    //tapGestureRecognizer.Tapped += GoToPlayer;
+                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                    stackLayout.Children.Add(new Image { Source = ImageSource.FromStream(() => path), Aspect = Aspect.AspectFill });
+                    movieContent.Children.Add(stackLayout);
+                }
+            }
+        }
+        int types = 0;
 		public MoviesPage ()
 		{
 			InitializeComponent ();
-		}
+            BurgerSlider.TranslateTo(-300, 0, 0);
+            ProfileSlider.TranslateTo(300, 0, 0);
+        }
 		public MoviesPage(int type)
 		{
 			InitializeComponent ();
-			if (type == 0) // movie
-			{
-                list1.Text = "Лучшие фильмы за всё время";
-			}
-			if (type == 1) // serial
-			{
-                list1.Text = "Лучшие сериалы за всё время";
-            }
-			if (type == 2) // anime
-			{
-                list1.Text = "Лучшее аниме за всё время";
-            }
+            BurgerSlider.TranslateTo(-300, 0, 0);
+            ProfileSlider.TranslateTo(300, 0, 0);
+            types = type;
+            
 		}
-        private async void ClosePanel(object sender, EventArgs e)
+        private void ClosePanel(object sender, EventArgs e)
         {
-            if (BurgerSlider.IsVisible)
+            if (BurgerSlider.TranslationX != -300)
             {
-                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                BurgerSlider.IsVisible = false;
+                BurgerSlider.TranslateTo(-300, 0, 450, Easing.SinOut);
+
             }
-            if (ProfileSlider.IsVisible)
+            if (ProfileSlider.TranslationX != 300)
             {
-                ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                ProfileSlider.IsVisible = false;
+                ProfileSlider.TranslateTo(300, 0, 450, Easing.SinOut);
             }
         }
-        private async void OpenBurger(object sender, EventArgs e)
+        private void OpenBurger(object sender, EventArgs e)
         {
-            if (BurgerSlider.IsVisible)
+            if (BurgerSlider.TranslationX == -300)
             {
-                BurgerSlider.TranslateTo(-30, -50, 450, Easing.SinOut);
-                await Task.Delay(200);
-                BurgerSlider.IsVisible = false;
-            }
-            else
-            {
-                BurgerSlider.IsVisible = true;
-                BurgerSlider.TranslateTo(10, 10, 450, Easing.CubicInOut);
+                BurgerSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
             }
         }
 
-        private async void Profile(object sender, EventArgs e)
+        private void Profile(object sender, EventArgs e)
         {
-            if (1 == 1)
+            if (1 == 2) // Вошёл ли в аккаунт пользователь
             {
-
                 Navigation.PushAsync(new RegPage());
             }
             else
             {
-                if (ProfileSlider.IsVisible)
+                ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
+                if (1 == 1) // Какая подписка у пользователя
                 {
-                    ProfileSlider.TranslateTo(30, -50, 450, Easing.SinOut);
-                    await Task.Delay(200);
-                    ProfileSlider.IsVisible = false;
-                }
-                else
-                {
-                    ProfileSlider.IsVisible = true;
-                    ProfileSlider.TranslateTo(-10, 10, 450, Easing.CubicInOut);
+
+                    movie.IsVisible = true;
+                    anime.IsVisible = true;
+                    history.IsVisible = true;
                 }
             }
         }
         private void Anime(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage( types));
         }
         private void Movies(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage(types));
         }
         private void Serials(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MoviesPage());
+            Navigation.PushAsync(new MoviesPage(types));
         }
         private void My(object sender, EventArgs e)
         {

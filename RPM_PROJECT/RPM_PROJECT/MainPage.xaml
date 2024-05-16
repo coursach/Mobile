@@ -57,22 +57,6 @@
                     <Image Source="banner_hamster.png"/>
                 </StackLayout>
 
-                <StackLayout Padding="10" x:Name="first" >
-                    <Label TextColor="White" FontSize="20" Text="Топ 100 за месяц" x:Name="firstLabel"/>
-                    <ScrollView Orientation="Horizontal">
-                        <StackLayout Orientation="Horizontal" x:Name="firstContent">
-                        </StackLayout>
-                    </ScrollView>
-                </StackLayout>
-                
-                <StackLayout Padding="10" IsVisible="true" x:Name="two">
-                    <Label TextColor="White" FontSize="20" Text="Рекомендуемые к просомтру" x:Name ="twoLabel"/>
-                    <ScrollView Orientation="Horizontal">
-                        <StackLayout Orientation="Horizontal" x:Name="twoContent">
-                        </StackLayout>
-                    </ScrollView>
-                </StackLayout>
-                
                 <StackLayout Padding="10" IsVisible="False" x:Name="movie">
                     <Label TextColor="White" FontSize="20" Text="Фильмы на основе ваших предпочтений" x:Name="movieLabel"/>
                     <ScrollView Orientation="Horizontal">
