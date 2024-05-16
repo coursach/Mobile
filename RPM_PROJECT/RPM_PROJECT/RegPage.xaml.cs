@@ -51,13 +51,20 @@ namespace RPM_PROJECT
             }
             else
             {
-                var result = await API.Registration(new AuthData { });
-                if (!result)
-                    return;
-                btn.Text = "Войти";
-                Entr.BackgroundColor = Color.FromHex("#1392DC");
-                Reg.BackgroundColor = Color.FromHex("#000000");
-                Password2.IsVisible = false;
+                if(Password.Text == Password2.Text)
+                {
+                    var result = await API.Registration(new AuthData { Email = "", Password = "" });
+                    if (!result)
+                        return;
+                    btn.Text = "Войти";
+                    Entr.BackgroundColor = Color.FromHex("#1392DC");
+                    Reg.BackgroundColor = Color.FromHex("#000000");
+                    Password2.IsVisible = false;
+                }
+                else
+                {
+                    DisplayAlert("Error", "Не верный пароль", "Ok");
+                }
             }
         }
     }
