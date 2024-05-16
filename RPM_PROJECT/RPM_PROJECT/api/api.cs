@@ -40,7 +40,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось обновить поле пользователя", response.ReasonPhrase ?? "", _displayOk);
                     return false;
                 }
 
@@ -63,7 +63,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось получить пользователя", "Вы навторизированы", _displayOk);
                     return null;
                 }
 
@@ -82,7 +82,7 @@ namespace RPM_PROJECT.api
                     return true;
 
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert("Ошибка регистрации", "Такая почта уже есть", _displayOk);
                 return false;
             }
 
@@ -96,7 +96,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Ошибка авторизации", "Не верная почта или пароль", _displayOk);
                     return "";
                 }
 
@@ -115,7 +115,7 @@ namespace RPM_PROJECT.api
             {
                 if(!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось получить подписки", response.ReasonPhrase ?? "", _displayOk);
                     return null;
                 }
 
@@ -136,7 +136,7 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                    await Alert.DisplayAlert("Не удалось оформить подписку", "Такой подписки нет", _displayOk);
                     return false;
                 }
             }
@@ -154,7 +154,7 @@ namespace RPM_PROJECT.api
                 if (response.IsSuccessStatusCode)
                     return true;
                 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert("Не удалось удалит подписку", response.ReasonPhrase ?? "", _displayOk);
                 return false;
             }
 
@@ -170,7 +170,7 @@ namespace RPM_PROJECT.api
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadFromJsonAsync<Subsribe>();
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase ?? "", _displayOk);
                 return null;
             }
         }
@@ -218,10 +218,6 @@ namespace RPM_PROJECT.api
                         input.CopyTo(outPut);
                     }
                 }
-
-                if (File.Exists(fullPath))
-                   await  Alert.DisplayAlert("huy", fullPath, "ok");
-               
                 return true;
             }
         }
@@ -269,7 +265,7 @@ namespace RPM_PROJECT.api
                         if (response.IsSuccessStatusCode)
                             return true;
 
-                        await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase, _displayOk);
+                        await Alert.DisplayAlert("Не удалось обновить фотогафию пользователя", response.ReasonPhrase ?? "", _displayOk);
                         return false;
                     }
                 }
