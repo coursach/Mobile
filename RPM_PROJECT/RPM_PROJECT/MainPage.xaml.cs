@@ -69,14 +69,7 @@ namespace RPM_PROJECT
                     movie.IsVisible = true;
                     anime.IsVisible = true;
                     history.IsVisible = true;
-
-             
-
-                    //Пятый скрол история
-
-
-                }
-                
+                }                
             }
             else
             {
@@ -111,12 +104,6 @@ namespace RPM_PROJECT
             }
             else
             {
-                /*var path = API.GetUser();
-                ava.ImageSource = path.Result.ImageUrl;
-                ava.Text = "";
-                ProfileAva.Source = path.Result.ImageUrl;
-                ProfileEmail.Text = path.Result.Email;
-                ProfileName.Text = path.Result?.Surname + path.Result?.Name;*/
                 ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
                 if (1 == 1) // Какая подписка у пользователя
                 {
@@ -167,7 +154,7 @@ namespace RPM_PROJECT
         {
             Preferences.Remove("isLogin");
             Preferences.Remove("token");
-            
+            ProfileSlider.TranslateTo(300, 0, 450, Easing.SinOut);
         }
     }
 }

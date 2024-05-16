@@ -7,7 +7,7 @@
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20" Spacing="20">
             <Label TextColor="White" FontSize="16" HorizontalTextAlignment="Center">Получите подписку на фильмы,сериалы и аниме</Label>
             <StackLayout Orientation="Horizontal">
-                <Entry BackgroundColor="#7F7F7F" Placeholder="Введите промокод" WidthRequest="170" TextColor="White"/>
+                <Entry BackgroundColor="#7F7F7F" Placeholder="Введите промокод" WidthRequest="170" TextColor="White" x:Name="entry"/>
                 <Button Text="Получить подписку" BackgroundColor="#7F7F7F" TextColor="White" Clicked="Button_Clicked"/>
             </StackLayout>
         </StackLayout>
