@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using RPM_PROJECT.api;
 using RPM_PROJECT.api.HttpEntitie;
 using Xamarin.Essentials;
@@ -59,10 +58,11 @@ namespace RPM_PROJECT
                 if (btn.Text == "Войти")
                 {
                     var result = await API.Login(new AuthData { Email = email.Text, Password = password.Text });
-                    if (!result)
+                    if (result == "")
                         return;
 
                     Preferences.Set("isLogin", true);
+                    Preferences.Set("token", result);
                     await Navigation.PushAsync(new MainPage());
                 }
                 else
