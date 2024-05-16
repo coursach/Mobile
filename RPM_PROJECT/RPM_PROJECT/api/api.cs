@@ -209,8 +209,12 @@ namespace RPM_PROJECT.api
                 var folder = FileSystem.CacheDirectory;
                 var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
 
+                if (!File.Exists(fullPath))
+                    File.Create(fullPath);
+
                 using (var input = await response.Content.ReadAsStreamAsync())
                 {
+
                     using (var outPut = await FileSystem.OpenAppPackageFileAsync(fullPath))
                     {
                         input.CopyTo(outPut);
