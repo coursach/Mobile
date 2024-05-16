@@ -75,9 +75,19 @@ namespace RPM_PROJECT
                     return;
                 }
 
-                var isValid = await API.UpdateImgeUser(result.FileName);
-                if (isValid)
-                    return;
+                if (result.FileName.EndsWith(".jpeg") || result.FileName.EndsWith(".jpg"))
+                {
+                    var isValid = await API.UpdateImageUserJpeg(result.FullPath);
+                    if (isValid)
+                        return;
+                }
+                else
+                {
+                    var isValid = await API.UpdateImageUserPng(result.FullPath);
+                    if (isValid)
+                        return;
+                }
+                   
 
             }
             catch

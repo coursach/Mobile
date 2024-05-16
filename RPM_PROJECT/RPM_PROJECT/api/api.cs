@@ -251,7 +251,14 @@ namespace RPM_PROJECT.api
             return response;
         }
 
-        public static async ValueTask<bool> UpdateImgeUser(string path)
+        public static async ValueTask<bool> UpdateImageUserPng(string filePath) =>
+    await UpdateImgeUser(filePath, "image/png");
+
+        public static async ValueTask<bool> UpdateImageUserJpeg(string filePath) =>
+            await UpdateImgeUser(filePath, "image/jpeg");
+
+
+        private static async ValueTask<bool> UpdateImgeUser(string path, string typeImage)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("token", Token);
@@ -259,6 +266,7 @@ namespace RPM_PROJECT.api
             {
                 using (var httpContent = new StreamContent(file))
                 {
+                    httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(typeImage);
                     using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", httpContent))
                     {
 
@@ -271,5 +279,6 @@ namespace RPM_PROJECT.api
                 }
             }
         }
+
     }
 }
