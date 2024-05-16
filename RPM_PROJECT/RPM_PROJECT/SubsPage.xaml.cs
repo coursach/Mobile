@@ -23,18 +23,27 @@ namespace RPM_PROJECT
             var subsribes = await API.GetAllSubscribe();
             foreach (Subsribe sub in subsribes)
             {
+                string colour;
+                var price = sub.Price;
+                if (price < 300) colour = "#C39028";
+                else if (price < 750) colour = "#1263DE";
+                else if (price < 850) colour = "#5F7C8D";
+                else if (price<2200) colour = "#1263DE";
+                else colour = "#5F7C8D";
+
                 stackLayout = new StackLayout
                 {
                     Margin = new Thickness(50, 10),
                 };
                 RealStack = new StackLayout()
                 {
-                    BackgroundColor = Color.FromHex("#1263DE"),
+                    BackgroundColor = Color.FromHex(colour),
                     Children = {
                         new Label
                     {
                         Margin = new Thickness(10, 40, 10, 70),
                         HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        TextColor = Color.FromHex("#FFFFFF"),
                         Text = sub.Name,
                         FontSize = 40
                     }
@@ -51,21 +60,21 @@ namespace RPM_PROJECT
                 }, Constraint.Constant(0));
                 relativeLayout.Children.Add(new Label()
                 {
-                    Text = sub.CountMonth.ToString(),
-                    FontSize = 70,
-                    TextColor = Color.White,
-                    Margin = new Thickness(48, 5)
-                }, Constraint.Constant(0));
-                relativeLayout.Children.Add(new Label()
-                {
                     Text = "Месяцев",
                     Margin = new Thickness(49, 95, 0, 50),
                     TextColor = Color.White,
                     FontSize = 60,
-                    BackgroundColor = Color.FromHex("#1263DE"),
                     HorizontalTextAlignment = TextAlignment.Center,
                     WidthRequest = 80
-                }, Constraint.Constant(1));
+                }, Constraint.Constant(0));
+                relativeLayout.Children.Add(new Label()
+                {
+                    Text = sub.CountMonth.ToString(),
+                    FontSize = 80,
+                    TextColor = Color.White,
+                    Margin = new Thickness(48, 5)
+                }, Constraint.Constant(0));
+
 
                 RealStack.Children.Add(relativeLayout);
                 RealStack.Children.Add(new Label
