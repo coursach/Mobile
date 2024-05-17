@@ -101,7 +101,8 @@ namespace RPM_PROJECT
             if (!CheckTextData("Имя", Name.Text))
                 return;
 
-            await API.UpdateUserField(new UpdateUserSend { NameField = "Name", NewValue= Name.Text });
+            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Name", NewValue= Name.Text });
+            if (result) await DisplayAlert("Успешное обновление", "", "ok");
         }
 
         private async void UpdateEmailClick(object sender, EventArgs e)
@@ -109,8 +110,9 @@ namespace RPM_PROJECT
             if (!CheckEmailData(Email.Text))
                 return;
 
-            await API.UpdateUserField(new UpdateUserSend { NameField = "Email", NewValue = Email.Text });
+            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Email", NewValue = Email.Text });
             Preferences.Set("token", API.Token);
+            if (result) await DisplayAlert("Успешное обновление", "", "ok");
         }
 
         private async void UpdatePasswordClick(object sender, EventArgs e)
@@ -118,8 +120,9 @@ namespace RPM_PROJECT
             if (!CheckTextData("Пароль", password.Text))
                 return;
 
-            await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
+            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
             Preferences.Set("token", API.Token);
+            if (result) await DisplayAlert("Успешное обновление", "", "ok");
         }
 
         private bool CheckTextData(string name, string data)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Transactions;
 using Xamarin.Essentials;
+using System.Text;
 
 
 namespace RPM_PROJECT.api
@@ -30,195 +31,265 @@ namespace RPM_PROJECT.api
 
         public static async ValueTask<bool> UpdateUserField(UpdateUserSend updateValue)
         {
-            const string emailField = "Email";
-            const string passwordField = "Password";
-        
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/user/update/user", updateValue, _options))
+            try
             {
-                if (!response.IsSuccessStatusCode)
+                const string emailField = "Email";
+                const string passwordField = "Password";
+
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
+
+                using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/user/update/user", updateValue, _options))
                 {
-                    await Alert.DisplayAlert("Не удалось обновить поле пользователя", response.ReasonPhrase ?? "", _displayOk);
-                    return false;
-                }
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await Alert.DisplayAlert("Не удалось обновить поле пользователя", response.ReasonPhrase ?? "", _displayOk);
+                        return false;
+                    }
 
 
-                if (updateValue.NameField == emailField || updateValue.NameField == passwordField)
-                {
-                    Token = await response.Content.ReadAsStringAsync();
+                    if (updateValue.NameField == emailField || updateValue.NameField == passwordField)
+                    {
+                        Token = await response.Content.ReadAsStringAsync();
+                    }
                 }
+
+                return true;
+            } catch
+            {
+                return false;
             }
-
-            return true;
-        }
+        } 
 
         public static async ValueTask<User> GetUser()
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/get/profile",null))
+           try
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    await Alert.DisplayAlert("Не удалось получить пользователя", "Вы навторизированы", _displayOk);
-                    return null;
-                }
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
 
-                var result = await response.Content.ReadFromJsonAsync<User>(_options);
-                return result;
+                using (var response = await httpClient.PostAsync(_baseApi + "/user/get/profile", null))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await Alert.DisplayAlert("Не удалось получить пользователя", "Вы навторизированы", _displayOk);
+                        return null;
+                    }
+
+                    var result = await response.Content.ReadFromJsonAsync<User>(_options);
+                    return result;
+                }
+            } catch
+            {
+                return null;    
             }
         }
 
         public static async ValueTask<bool> Registration(AuthData data)
         {
-            var httpClient = new HttpClient();
-
-            using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/registration/user", data, _options))
+           try
             {
-                if (response.IsSuccessStatusCode)
-                    return true;
+                var httpClient = new HttpClient();
+
+                using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/registration/user", data, _options))
+                {
+                    if (response.IsSuccessStatusCode)
+                        return true;
 
 
-                await Alert.DisplayAlert("Ошибка регистрации", "Такая почта уже есть", _displayOk);
-                return false;
+                    await Alert.DisplayAlert("Ошибка регистрации", "Такая почта уже есть", _displayOk);
+                    return false;
+                }
+
+            } catch
+            {
+                return false; 
             }
-
         }
 
         public static async ValueTask<string > Login(AuthData data)
         {
-            var httpClient = new HttpClient();
-
-            using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/login", data, _options))
+           try
             {
-                if (!response.IsSuccessStatusCode)
+                var httpClient = new HttpClient();
+
+                using (var response = await httpClient.PostAsJsonAsync(_baseApi + "/login", data, _options))
                 {
-                    await Alert.DisplayAlert("Ошибка авторизации", "Не верная почта или пароль", _displayOk);
-                    return "";
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await Alert.DisplayAlert("Ошибка авторизации", "Не верная почта или пароль", _displayOk);
+                        return "";
+                    }
+
+                    var result = await response.Content.ReadFromJsonAsync<Token>();
+                    Token = result.TokenValue;
+
+                    return result.TokenValue;
                 }
-
-                var result = await response.Content.ReadFromJsonAsync<Token>();
-                Token = result.TokenValue;
-
-                return result.TokenValue;
+            } catch
+            {
+                return null; 
             }
         }
 
         public static async ValueTask<IEnumerable<Subsribe>> GetAllSubscribe()
         {
-            var httpClient = new HttpClient();
-
-            using (var response = await httpClient.GetAsync(_baseApi + "/subscribe"))
+           try
             {
-                if(!response.IsSuccessStatusCode)
+                var httpClient = new HttpClient();
+
+                using (var response = await httpClient.GetAsync(_baseApi + "/subscribe"))
                 {
-                    await Alert.DisplayAlert("Не удалось получить подписки", response.ReasonPhrase ?? "", _displayOk);
-                    return null;
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await Alert.DisplayAlert("Не удалось получить подписки", response.ReasonPhrase ?? "", _displayOk);
+                        return null;
+                    }
+
+                    List<Subsribe> subsribes = new List<Subsribe>();
+
+                    var jsonResult = await response.Content.ReadAsStreamAsync();
+                    var result = await JsonSerializer.DeserializeAsync<List<Subsribe>>(jsonResult);
+                    return result;
                 }
-
-                List<Subsribe> subsribes = new List<Subsribe>();
-
-                var jsonResult = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<List<Subsribe>>(jsonResult);
-                return result;
+            } catch
+            {
+                return null;
             }
         }
 
         public static async ValueTask<bool> LinkUserWithSubscribe(int id)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/link/subscribe/" + id.ToString(), null))
+           try
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    await Alert.DisplayAlert("Не удалось оформить подписку", "Такой подписки нет", _displayOk);
-                    return false;
-                }
-            }
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
 
-            return true;
+                using (var response = await httpClient.PostAsync(_baseApi + "/user/link/subscribe/" + id.ToString(), null))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await Alert.DisplayAlert("Не удалось оформить подписку", "Такой подписки нет", _displayOk);
+                        return false;
+                    }
+                }
+
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
 
         public static async ValueTask<bool> DeleteSubsribe()
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/unlink/subscribe", null))
+            try
             {
-                if (response.IsSuccessStatusCode)
-                    return true;
-                
-                await Alert.DisplayAlert("Не удалось удалит подписку", response.ReasonPhrase ?? "", _displayOk);
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
+
+                using (var response = await httpClient.PostAsync(_baseApi + "/user/unlink/subscribe", null))
+                {
+                    if (response.IsSuccessStatusCode)
+                        return true;
+
+                    await Alert.DisplayAlert("Не удалось удалит подписку", response.ReasonPhrase ?? "", _displayOk);
+                    return false;
+                }
+            } catch
+            {
                 return false;
             }
+          
 
         }
 
         public static async ValueTask<Subsribe> CheckUserSubscribe()
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.GetAsync(_baseApi + "/user/get/subscribe"))
+            try
             {
-                if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadFromJsonAsync<Subsribe>();
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
 
-                await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase ?? "", _displayOk);
+                using (var response = await httpClient.GetAsync(_baseApi + "/user/get/subscribe"))
+                {
+                    if (response.IsSuccessStatusCode)
+                        return await response.Content.ReadFromJsonAsync<Subsribe>();
+
+                    await Alert.DisplayAlert(response.StatusCode.ToString(), response.ReasonPhrase ?? "", _displayOk);
+                    return null;
+                }
+            } catch
+            {
                 return null;
             }
+           
         }
 
         public static async ValueTask<bool> UserActivateCode(string promocode)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/get/promocode/" + promocode, null))
+            try
             {
-                return response.IsSuccessStatusCode;
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
+
+                using (var response = await httpClient.PostAsync(_baseApi + "/user/get/promocode/" + promocode, null))
+                {
+                    return response.IsSuccessStatusCode;
+                }
+            } catch
+            {
+                return false;
             }
+           
         }
 
         public static async ValueTask<System.IO.Stream> GetImageProfile(string profileLink)
         {
-            var httpClient = new HttpClient();
+            try
+            {
+                var httpClient = new HttpClient();
 
-            return await httpClient.GetStreamAsync(_baseApi + "/" + profileLink);
+                return await httpClient.GetStreamAsync(_baseApi + "/" + profileLink);
+            } catch
+            {
+                return null;
+            }
+            
         }
 
         public static async ValueTask<bool> GetContent(int id)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-
-            using (var response = await httpClient.PostAsync(_baseApi + "/user/get/content/" + id.ToString(), null))
+           try
             {
-                if (!response.IsSuccessStatusCode)
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
+
+                using (var response = await httpClient.PostAsync(_baseApi + "/user/get/content/" + id.ToString(), null))
                 {
-                    await Alert.DisplayAlert("Вам не доступен контент из-за уровня подписки", "пожалуйста приобритите подписку", _displayOk);
-                    return false;
-                }
-
-                var folder = FileSystem.CacheDirectory;
-                var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
-
-
-                using (var input = await response.Content.ReadAsStreamAsync())
-                {
-
-                    using (var outPut = File.Open(fullPath, FileMode.OpenOrCreate))
+                    if (!response.IsSuccessStatusCode)
                     {
-                        input.CopyTo(outPut);
+                        await Alert.DisplayAlert("Вам не доступен контент из-за уровня подписки", "пожалуйста приобритите подписку", _displayOk);
+                        return false;
                     }
+
+                    var folder = FileSystem.CacheDirectory;
+                    var fullPath = Path.Combine(folder, "xamarinVideo.mp4");
+
+
+                    using (var input = await response.Content.ReadAsStreamAsync())
+                    {
+
+                        using (var outPut = File.Open(fullPath, FileMode.OpenOrCreate))
+                        {
+                            input.CopyTo(outPut);
+                        }
+                    }
+                    return true;
                 }
-                return true;
+            } catch
+            {
+                return false;
             }
         }
 
@@ -226,29 +297,51 @@ namespace RPM_PROJECT.api
 
         public static async ValueTask<ContentInfo> GetContentInfo(int id)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
+            try
+            {
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
 
-            var response = await httpClient.GetFromJsonAsync<ContentInfo>(_baseApi + "/content/info/" + id.ToString());
+                var response = await httpClient.GetFromJsonAsync<ContentInfo>(_baseApi + "/content/info/" + id.ToString());
 
-            return response;
+                return response;
+            } catch
+            {
+                return null;
+            }
+            
         }   
 
         public static async ValueTask<List<ContentShort>> GetAllMovie()
         {
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/movie");
+            try
+            {
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/movie");
 
-            return response;
+                return response;
+            } catch
+            {
+                return null;
+            }
+           
         } 
 
 
         public static async ValueTask<List<ContentShort>> GetAllAnime()
         {
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/anime");
+            try
+            {
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetFromJsonAsync<List<ContentShort>>(_baseApi + "/content/anime");
 
-            return response;
+                return response;
+            }
+            catch
+            {
+                return null;
+            }
+           
         }
 
         public static async ValueTask<bool> UpdateImageUserPng(string filePath) =>
@@ -260,23 +353,29 @@ namespace RPM_PROJECT.api
 
         private static async ValueTask<bool> UpdateImgeUser(string path, string typeImage)
         {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("token", Token);
-            using (var file = File.Open(path, FileMode.Open))
+            try
             {
-                using (var httpContent = new StreamContent(file))
+                var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("token", Token);
+                using (var file = File.Open(path, FileMode.Open))
                 {
-                    httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(typeImage);
-                    using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", httpContent))
+                    using (var httpContent = new StreamContent(file))
                     {
+                        httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(typeImage);
+                        using (var response = await httpClient.PostAsync(_baseApi + "/user/update/user", httpContent))
+                        {
 
-                        if (response.IsSuccessStatusCode)
-                            return true;
+                            if (response.IsSuccessStatusCode)
+                                return true;
 
-                        await Alert.DisplayAlert("Не удалось обновить фотогафию пользователя", response.ReasonPhrase ?? "", _displayOk);
-                        return false;
+                            await Alert.DisplayAlert("Не удалось обновить фотогафию пользователя", response.ReasonPhrase ?? "", _displayOk);
+                            return false;
+                        }
                     }
                 }
+            } catch
+            {
+                return false;
             }
         }
 
