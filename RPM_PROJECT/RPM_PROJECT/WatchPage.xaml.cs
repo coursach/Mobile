@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RPM_PROJECT.api;
 using Xamarin.CommunityToolkit.UI.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,8 +25,21 @@ namespace RPM_PROJECT
             image.Source = ImageSource.FromStream(() => path);
             var hehehehhee = await API.GetContent(Index);
             if(hehehehhee) button.IsVisible = true;
+            if (Preferences.Get("isLogin", false))
+            {
+                ava.IsVisible = false;
+                var user = await API.GetUser();
+                path = await API.GetImageProfile(user.ImageUrl);
 
-
+                avaImage.IsVisible = true;
+                avaImage.Source = ImageSource.FromStream(() => path);
+                avaImage.Aspect = Aspect.AspectFill;
+                ProfileName.Text = user.Name;
+                ProfileEmail.Text = user.Email;
+                var path1 = await API.GetImageProfile(user.ImageUrl);
+                ProfileAva.Source = ImageSource.FromStream(() => path1);
+                ProfileAva.Aspect = Aspect.AspectFill;
+            }
         }
         public WatchPage()
         {
@@ -63,7 +77,7 @@ namespace RPM_PROJECT
 
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2) // Вошёл ли в аккаунт пользователь
+            if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
@@ -104,7 +118,11 @@ namespace RPM_PROJECT
 
         private void Exit(object sender, EventArgs e)
         {
-
+            Preferences.Remove("isLogin");
+            Preferences.Remove("token");
+            ava.IsVisible = true;
+            avaImage.IsVisible = false;
+            ProfileSlider.TranslateTo(300, 0, 0);
         }
 
         private void Button_Clicked(object sender, EventArgs e)

@@ -58,7 +58,7 @@
                     <Image Source="banner_hamster.png"/>
                 </StackLayout>
 
-                <StackLayout Padding="10" IsVisible="False" x:Name="movie">
+                <StackLayout Padding="10" IsVisible="True" x:Name="movie">
                     <Label TextColor="White" FontSize="20" Text="Фильмы на основе ваших предпочтений" x:Name="movieLabel"/>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal" x:Name="movieContent">
@@ -66,7 +66,7 @@
                     </ScrollView>
                 </StackLayout>
 
-                <StackLayout Padding="10" IsVisible="False" x:Name="anime">
+                <StackLayout Padding="10" IsVisible="True" x:Name="anime">
                     <Label TextColor="White" FontSize="20" Text="Аниме на основе ваших предпочтений" x:Name="animeLabel"/>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal" x:Name="animeContent">
@@ -74,7 +74,7 @@
                     </ScrollView>
                 </StackLayout>
 
-                <StackLayout Padding="10" IsVisible="False" x:Name="history">
+                <StackLayout Padding="10" IsVisible="True" x:Name="history">
                     <Label TextColor="White" FontSize="20" Text="История" x:Name="historyLabel"/>
                     <ScrollView Orientation="Horizontal">
                         <StackLayout Orientation="Horizontal" x:Name="historyContent">

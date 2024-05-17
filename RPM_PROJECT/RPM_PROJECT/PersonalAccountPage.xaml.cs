@@ -101,8 +101,7 @@ namespace RPM_PROJECT
             if (!CheckTextData("Имя", Name.Text))
                 return;
 
-            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Name", NewValue= Name.Text });
-            if (result) await DisplayAlert("Успешное обновление", "", "ok");
+            await API.UpdateUserField(new UpdateUserSend { NameField = "Name", NewValue= Name.Text });
         }
 
         private async void UpdateEmailClick(object sender, EventArgs e)
@@ -110,19 +109,24 @@ namespace RPM_PROJECT
             if (!CheckEmailData(Email.Text))
                 return;
 
-            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Email", NewValue = Email.Text });
+            await API.UpdateUserField(new UpdateUserSend { NameField = "Email", NewValue = Email.Text });
             Preferences.Set("token", API.Token);
-            if (result) await DisplayAlert("Успешное обновление", "", "ok");
         }
 
         private async void UpdatePasswordClick(object sender, EventArgs e)
         {
-            if (!CheckTextData("Пароль", password.Text))
-                return;
+            if(password.Text != "")
+            {
+                if (!CheckTextData("Пароль", password.Text))
+                    return;
 
-            var result = await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
-            Preferences.Set("token", API.Token);
-            if (result) await DisplayAlert("Успешное обновление", "", "ok");
+                await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
+                Preferences.Set("token", API.Token);
+            }
+            else
+            {
+                await DisplayAlert("Error", "Пароль не должен быть пустым", "Ok");
+            }
         }
 
         private bool CheckTextData(string name, string data)

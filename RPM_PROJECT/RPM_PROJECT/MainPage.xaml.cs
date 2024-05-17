@@ -17,18 +17,24 @@ namespace RPM_PROJECT
         {
             if (Preferences.Get("isLogin", false))
             {
-                ava.IsVisible = false;
                 var user = await API.GetUser();
-                var path = await API.GetImageProfile(user.ImageUrl);
-                
-                avaImage.IsVisible = true;
-                avaImage.Source = ImageSource.FromStream(() => path);
-                avaImage.Aspect = Aspect.AspectFill;
-                ProfileName.Text = user.Name;
-                ProfileEmail.Text = user.Email;
-                var path1 = await API.GetImageProfile(user.ImageUrl);
-                ProfileAva.Source = ImageSource.FromStream(() => path1);
-                ProfileAva.Aspect = Aspect.AspectFill;
+                if (user != null)
+                {
+                    ava.IsVisible = false;
+                    var path = await API.GetImageProfile(user.ImageUrl);
+                    avaImage.IsVisible = true;
+                    avaImage.Source = ImageSource.FromStream(() => path);
+                    avaImage.Aspect = Aspect.AspectFill;
+                    ProfileName.Text = user.Name;
+                    ProfileEmail.Text = user.Email;
+                    var path1 = await API.GetImageProfile(user.ImageUrl);
+                    ProfileAva.Source = ImageSource.FromStream(() => path1);
+                    ProfileAva.Aspect = Aspect.AspectFill;
+                }
+                else
+                {
+                    ava.IsVisible = true;
+                }
             }
             StackLayout stackLayout = new StackLayout();
             var tapGestureRecognizer = new TapGestureRecognizer();
@@ -70,34 +76,13 @@ namespace RPM_PROJECT
                 stackLayout.ClassId = movie.Id.ToString(); 
                 historyContent.Children.Add(stackLayout);
             }
-
         }
+
         public MainPage()
         {
             InitializeComponent();
             BurgerSlider.TranslateTo(-300, 0, 0);
             ProfileSlider.TranslateTo(300, 0, 0);
-
-            if (1 == 1) // Зашёл ли пользователь в аккаунт
-            {
-                if(2 == 2) // есть ли подписка
-                {
-                    movie.IsVisible = true;
-                    anime.IsVisible = true;
-                    history.IsVisible = true;
-
-             
-
-                    //Пятый скрол история
-
-
-                }
-                
-            }
-            else
-            {
-
-            }
         }
         private void ClosePanel(object sender, EventArgs e)
         {
@@ -119,7 +104,7 @@ namespace RPM_PROJECT
             }
         }
 
-        private async void Profile(object sender, EventArgs e)
+        private void Profile(object sender, EventArgs e)
         {
             if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
@@ -127,20 +112,11 @@ namespace RPM_PROJECT
             }
             else
             {
-                /*var path = API.GetUser();
-                ava.ImageSource = path.Result.ImageUrl;
-                ava.Text = "";
-                ProfileAva.Source = path.Result.ImageUrl;
-                ProfileEmail.Text = path.Result.Email;
-                ProfileName.Text = path.Result?.Surname + path.Result?.Name;*/
-                ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);
-                if (1 == 1) // Какая подписка у пользователя
-                {
+                ProfileSlider.TranslateTo(0, 0, 450, Easing.CubicInOut);              
+                movie.IsVisible = true;
+                anime.IsVisible = true;
+                history.IsVisible = true;
                 
-                    movie.IsVisible = true;
-                    anime.IsVisible = true;
-                    history.IsVisible = true;
-                }
             }
         }
 

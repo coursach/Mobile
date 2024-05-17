@@ -21,6 +21,21 @@ namespace RPM_PROJECT
         RelativeLayout relativeLayout = new RelativeLayout();
         protected override async void OnAppearing()
         {
+            if (Preferences.Get("isLogin", false))
+            {
+                ava.IsVisible = false;
+                var user = await API.GetUser();
+                var path = await API.GetImageProfile(user.ImageUrl);
+
+                avaImage.IsVisible = true;
+                avaImage.Source = ImageSource.FromStream(() => path);
+                avaImage.Aspect = Aspect.AspectFill;
+                ProfileName.Text = user.Name;
+                ProfileEmail.Text = user.Email;
+                var path1 = await API.GetImageProfile(user.ImageUrl);
+                ProfileAva.Source = ImageSource.FromStream(() => path1);
+                ProfileAva.Aspect = Aspect.AspectFill;
+            }
             var subsribes = await API.GetAllSubscribe();
             foreach (Subsribe sub in subsribes)
             {
@@ -163,11 +178,6 @@ namespace RPM_PROJECT
             BurgerSlider.TranslateTo(-300, 0, 0);
             ProfileSlider.TranslateTo(300, 0, 0);
 
-
-            // Отрисовка подписок
-
-
-
         }
         private void ClosePanel(object sender, EventArgs e)
         {
@@ -191,7 +201,7 @@ namespace RPM_PROJECT
 
         private void Profile(object sender, EventArgs e)
         {
-            if (1 == 2) // Вошёл ли в аккаунт пользователь
+            if (!Preferences.Get("isLogin", false)) // Вошёл ли в аккаунт пользователь
             {
                 Navigation.PushAsync(new RegPage());
             }
@@ -218,7 +228,7 @@ namespace RPM_PROJECT
         }
         private void Sub(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SubsPage());
+            //Navigation.PushAsync(new SubsPage());
         }
         private void Settings(object sender, EventArgs e)
         {
@@ -232,7 +242,11 @@ namespace RPM_PROJECT
 
         private void Exit(object sender, EventArgs e)
         {
-
+            Preferences.Remove("isLogin");
+            Preferences.Remove("token");
+            ava.IsVisible = true;
+            avaImage.IsVisible = false;
+            ProfileSlider.TranslateTo(300, 0, 0);
         }
     }
 }
