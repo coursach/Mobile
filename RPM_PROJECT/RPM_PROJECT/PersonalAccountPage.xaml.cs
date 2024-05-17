@@ -115,11 +115,18 @@ namespace RPM_PROJECT
 
         private async void UpdatePasswordClick(object sender, EventArgs e)
         {
-            if (!CheckTextData("Пароль", password.Text))
-                return;
+            if(password.Text != "")
+            {
+                if (!CheckTextData("Пароль", password.Text))
+                    return;
 
-            await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
-            Preferences.Set("token", API.Token);
+                await API.UpdateUserField(new UpdateUserSend { NameField = "Password", NewValue = password.Text });
+                Preferences.Set("token", API.Token);
+            }
+            else
+            {
+                await DisplayAlert("Error", "Пароль не должен быть пустым", "Ok");
+            }
         }
 
         private bool CheckTextData(string name, string data)

@@ -63,7 +63,9 @@ namespace RPM_PROJECT.api
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    await Alert.DisplayAlert("Не удалось получить пользователя", "Вы навторизированы", _displayOk);
+                    Preferences.Set("token", "");
+                    Preferences.Set("isLogin", false);
+                    await Alert.DisplayAlert("Не удалось получить пользователя", "Вы не авторизированы", _displayOk);
                     return null;
                 }
 

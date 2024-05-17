@@ -17,18 +17,24 @@ namespace RPM_PROJECT
         {
             if (Preferences.Get("isLogin", false))
             {
-                ava.IsVisible = false;
                 var user = await API.GetUser();
-                var path = await API.GetImageProfile(user.ImageUrl);
-                
-                avaImage.IsVisible = true;
-                avaImage.Source = ImageSource.FromStream(() => path);
-                avaImage.Aspect = Aspect.AspectFill;
-                ProfileName.Text = user.Name;
-                ProfileEmail.Text = user.Email;
-                var path1 = await API.GetImageProfile(user.ImageUrl);
-                ProfileAva.Source = ImageSource.FromStream(() => path1);
-                ProfileAva.Aspect = Aspect.AspectFill;
+                if (user != null)
+                {
+                    ava.IsVisible = false;
+                    var path = await API.GetImageProfile(user.ImageUrl);
+                    avaImage.IsVisible = true;
+                    avaImage.Source = ImageSource.FromStream(() => path);
+                    avaImage.Aspect = Aspect.AspectFill;
+                    ProfileName.Text = user.Name;
+                    ProfileEmail.Text = user.Email;
+                    var path1 = await API.GetImageProfile(user.ImageUrl);
+                    ProfileAva.Source = ImageSource.FromStream(() => path1);
+                    ProfileAva.Aspect = Aspect.AspectFill;
+                }
+                else
+                {
+                    ava.IsVisible = true;
+                }
             }
             StackLayout stackLayout = new StackLayout();
             var tapGestureRecognizer = new TapGestureRecognizer();

@@ -26,7 +26,7 @@
             <Button Text="Обновить email" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdateEmailClick"/>
             
             <Label  Text="Пароль"/>
-            <Entry Placeholder="Пароль" x:Name="password" MaxLength="20" IsPassword="True"/>
+            <Entry Placeholder="Пароль" x:Name="password" Text="" MaxLength="20" IsPassword="True"/>
             <Button Text="Обновить пароль" BackgroundColor="#1263DE" TextColor="White" Clicked="UpdatePasswordClick"/>
             
             <Label  Text="Имя"/>
