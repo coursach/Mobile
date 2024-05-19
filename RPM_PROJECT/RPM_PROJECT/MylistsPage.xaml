@@ -135,7 +135,7 @@
                     <Label Text="Яковлева Мерся" TextColor="White" FontSize="Medium" x:Name="ProfileName"/>
                     <Label Text="cheito@mail.ru" TextColor="Gray" x:Name="ProfileEmail"/>
                 </StackLayout>
-                <ImageButton Source="ava.png" Grid.Column="1" x:Name="ProfileAva" WidthRequest="60" HeightRequest="20" CornerRadius="45" Margin="5" HorizontalOptions="Center"/>
+                <ImageButton Source="ava.png" Grid.Column="1" x:Name="ProfileAva" WidthRequest="80" HeightRequest="80" CornerRadius="45" Margin="5" HorizontalOptions="Center"/>
             </Grid>
             <Button Text="Настройки" Clicked="Settings" Style="{StaticResource burg}" Grid.Row="1" HorizontalOptions="Fill" FontSize="Header"/>
             <Button Text="Выйти" Clicked="Exit" Style="{StaticResource burg}" Grid.Row="2" HorizontalOptions="Fill" FontSize="Header"/>

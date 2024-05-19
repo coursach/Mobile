@@ -81,8 +81,7 @@ namespace RPM_PROJECT
         {
             InitializeComponent();
             BurgerSlider.TranslateTo(-300, 0, 0);
-            ProfileSlider.TranslateTo(300, 0, 0);
-
+            ProfileSlider.TranslateTo(600, 0, 0);
         }
         private void GoToPlayer(object sender, EventArgs e)
         {
@@ -98,7 +97,7 @@ namespace RPM_PROJECT
             }
             if (ProfileSlider.TranslationX != 300)
             {
-                ProfileSlider.TranslateTo(300, 0, 450, Easing.SinOut);
+                ProfileSlider.TranslateTo(600, 0, 450, Easing.SinOut);
             }
         }
         private void OpenBurger(object sender, EventArgs e)
